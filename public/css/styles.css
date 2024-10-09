@@ -1,0 +1,21 @@
+.create_box{
+    border: 1px solid #666666;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1px solid #666666;
+}
+
+.ch_id{
+    width: 5%;
+}
+
+.ch_command{
+    width: 10%;
+}
