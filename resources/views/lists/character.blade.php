@@ -20,7 +20,7 @@
             <td class="ch_explain">{{$character->explain}}</td>
             <td class="ch_command">
                 <a href="#">詳細</a>
-                <a href="#">編集</a>
+                <a href="{{ route('charas.edit', ['chara_id' => $character->id]) }}">編集</a>
                 <a href="#">削除</a>
             </td>
         </tr>

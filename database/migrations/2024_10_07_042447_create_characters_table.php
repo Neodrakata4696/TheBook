@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 24);
-            $table->string('explain', 140);
+            $table->string('name', length:24);
+            $table->string('explain', length:140)->nullable($value = true);
             $table->timestamps();
         });
     }
