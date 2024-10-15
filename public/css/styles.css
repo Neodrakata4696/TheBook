@@ -1,21 +1,63 @@
+*{
+    margin: 0;
+}
+
 .create_box{
     border: 1px solid #666666;
+    border-bottom: none;
     text-align: center;
 }
 
-table {
-    width: 100%;
+table{
     border-collapse: collapse;
+}
+
+.database{
+    width: 100%;
 }
 
 th, td{
     border: 1px solid #666666;
 }
 
-.ch_id{
+.database th{
+    background-color: #C9C9C9;
+}
+
+.table_id{
     width: 5%;
 }
 
-.ch_command{
+td.table_id{
+    text-align: right;
+}
+
+.table_explain{
+    width: 50%;
+}
+
+.table_command{
     width: 10%;
+    text-align: center;
+}
+
+.detail{
+    margin: 16px;
+}
+
+.detail th{
+    width: 10%;
+}
+
+.toolbox{
+    margin: auto;
+    width: 20%;
+    text-align: center;
+    border: 1px solid #666666;
+}
+
+.warning{
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
 }

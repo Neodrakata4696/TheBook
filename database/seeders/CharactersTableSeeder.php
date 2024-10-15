@@ -15,15 +15,11 @@ class CharactersTableSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['素早い歩兵', '飛び回る小鳥', 'スプリッチ・ゴアー', 'ビッグブロックサウルス', '忍び寄るタン・キャッチャー'];
-        
-        foreach ($names as $name) {
-            DB::table('characters')->insert([
-                'name' => $name,
-                'explain' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
+        DB::table('characters')->insert([
+            'name' => 'マナ',
+            'explain' => '魔法使いの女の子',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

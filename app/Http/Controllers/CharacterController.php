@@ -28,6 +28,16 @@ class CharacterController extends Controller
         return redirect()->route('charas.index');
     }
     
+    public function detail(Character $chara){
+        $chara->findOrFail($chara->id);
+        
+        return view('lists/characters/detail', [
+            'chara_id' => $chara->id,
+            'chara_name' => $chara->name,
+            'chara_explain' => $chara->explain,
+        ]);
+    }
+    
     public function editForm(int $chara_id){
         $chara = Character::find($chara_id);
         
@@ -44,6 +54,24 @@ class CharacterController extends Controller
         $chara->name = $request->name;
         $chara->explain = $request->explain;
         $chara->save();
+        
+        return redirect()->route('charas.index');
+    }
+    
+    public function deleteForm(int $chara_id){
+        $chara = Character::find($chara_id);
+        
+        return view('lists/characters/delete', [
+            'chara_id' => $chara->id,
+            'chara_name' => $chara->name,
+            'chara_explain' => $chara->explain,
+        ]);
+    }
+    
+    public function delete(int $chara_id, Request $request){
+        $chara = Character::find($chara_id);
+        
+        $chara->delete();
         
         return redirect()->route('charas.index');
     }

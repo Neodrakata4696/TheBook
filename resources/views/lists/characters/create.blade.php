@@ -7,7 +7,7 @@
         <label for="explain">説明文</label>
         <input type="text" name="explain">
         @csrf
-        <button type="submit">発射ァ</button>
+        <button type="submit">作成</button>
     </form>
 </main>
 @endsection

@@ -13,5 +13,12 @@ Route::get('/charaList', [CharacterController::class, "index"])->name('charas.in
 Route::get('/charaList/create', [CharacterController::class, "createForm"])->name('charas.create');
 Route::post('/charaList/create', [CharacterController::class, "create"]);
 
+Route::get('/charaList/{chara}', [CharacterController::class, "detail"])->name('charas.detail');
+
 Route::get('/charaList/{chara_id}/edit', [CharacterController::class, "editForm"])->name('charas.edit');
 Route::post('/charaList/{chara_id}/edit', [CharacterController::class, "edit"]);
+
+Route::get('/charaList/{chara_id}/delete', [CharacterController::class, "deleteForm"])->name('charas.delete');
+Route::post('/charaList/{chara_id}/delete', [CharacterController::class, "delete"]);
+
+?>
