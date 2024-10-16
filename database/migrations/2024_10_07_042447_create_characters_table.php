@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name', length:24);
             $table->string('explain', length:140)->nullable($value = true);
+            $table->string('descript', length:500)->nullable($value = true);
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 @section('content')
 <main>
     <p class="warning">このキャラクターを削除します。よろしいですか</p>
-    <form method="post" action="{{ route('charas.delete', ['chara_id' => $chara_id]) }}">
+    <form method="post" action="{{ route('charas.delete', ['chara' => $chara_id]) }}">
         <label for="name">キャラクター名</label>
         <input type="text" name="name" readonly value="{{ old('name') ?? $chara_name }}">
         <label for="explain">説明文</label>

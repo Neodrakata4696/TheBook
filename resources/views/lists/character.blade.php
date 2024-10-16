@@ -18,8 +18,8 @@
             <td class="table_explain">{{$character->explain}}</td>
             <td class="table_command">
                 <a href="{{ route('charas.detail', ['chara' => $character->id]) }}">詳細</a>
-                <a href="{{ route('charas.edit', ['chara_id' => $character->id]) }}">編集</a>
-                <a href="{{ route('charas.delete', ['chara_id' => $character->id]) }}">削除</a>
+                <a href="{{ route('charas.edit', ['chara' => $character->id]) }}">編集</a>
+                <a href="{{ route('charas.delete', ['chara' => $character->id]) }}">削除</a>
             </td>
         </tr>
         @endforeach

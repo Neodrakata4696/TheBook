@@ -23,6 +23,7 @@ class CharacterController extends Controller
         $chara = new Character();
         $chara->name = $request->name;
         $chara->explain = $request->explain;
+        $chara->descript = $request->descript;
         $chara->save();
         
         return redirect()->route('charas.index');
@@ -35,11 +36,12 @@ class CharacterController extends Controller
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
         ]);
     }
     
-    public function editForm(int $chara_id){
-        $chara = Character::find($chara_id);
+    public function editForm(Character $chara){
+        $chara->findOrFail($chara->id);
         
         return view('lists/characters/edit', [
             'chara_id' => $chara->id,
@@ -48,8 +50,8 @@ class CharacterController extends Controller
         ]);
     }
     
-    public function edit(int $chara_id, Request $request){
-        $chara = Character::find($chara_id);
+    public function edit(Character $chara, Request $request){
+        $chara->findOrFail($chara->id);
         
         $chara->name = $request->name;
         $chara->explain = $request->explain;
@@ -58,8 +60,8 @@ class CharacterController extends Controller
         return redirect()->route('charas.index');
     }
     
-    public function deleteForm(int $chara_id){
-        $chara = Character::find($chara_id);
+    public function deleteForm(Character $chara){
+        $chara->findOrFail($chara->id);
         
         return view('lists/characters/delete', [
             'chara_id' => $chara->id,
@@ -68,8 +70,8 @@ class CharacterController extends Controller
         ]);
     }
     
-    public function delete(int $chara_id, Request $request){
-        $chara = Character::find($chara_id);
+    public function delete(Character $chara, Request $request){
+        $chara->findOrFail($chara->id);
         
         $chara->delete();
         

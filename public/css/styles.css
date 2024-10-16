@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+header{
+    border-bottom: 2px solid #777777;
+}
+
 .create_box{
     border: 1px solid #666666;
     border-bottom: none;
@@ -20,7 +24,7 @@ th, td{
     border: 1px solid #666666;
 }
 
-.database th{
+th{
     background-color: #C9C9C9;
 }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class CharactersTableSeeder extends Seeder
+class CharactersTableSeeder_Dragon extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,9 +16,9 @@ class CharactersTableSeeder extends Seeder
     public function run()
     {
         DB::table('characters')->insert([
-            'name' => 'マナ',
-            'explain' => '魔法使いの女の子',
-            'descript' => '魔法使いの女の子。元気に敵を打ち滅ぼす',
+            'name' => '孫悟空',
+            'explain' => 'おっす！オラ悟空！',
+            'descript' => '',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

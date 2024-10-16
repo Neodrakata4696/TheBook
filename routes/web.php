@@ -15,10 +15,10 @@ Route::post('/charaList/create', [CharacterController::class, "create"]);
 
 Route::get('/charaList/{chara}', [CharacterController::class, "detail"])->name('charas.detail');
 
-Route::get('/charaList/{chara_id}/edit', [CharacterController::class, "editForm"])->name('charas.edit');
-Route::post('/charaList/{chara_id}/edit', [CharacterController::class, "edit"]);
+Route::get('/charaList/{chara}/edit', [CharacterController::class, "editForm"])->name('charas.edit');
+Route::post('/charaList/{chara}/edit', [CharacterController::class, "edit"]);
 
-Route::get('/charaList/{chara_id}/delete', [CharacterController::class, "deleteForm"])->name('charas.delete');
-Route::post('/charaList/{chara_id}/delete', [CharacterController::class, "delete"]);
+Route::get('/charaList/{chara}/delete', [CharacterController::class, "deleteForm"])->name('charas.delete');
+Route::post('/charaList/{chara}/delete', [CharacterController::class, "delete"]);
 
 ?>
