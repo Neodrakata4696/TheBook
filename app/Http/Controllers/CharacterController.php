@@ -10,7 +10,7 @@ class CharacterController extends Controller
     public function index(){
         $characters = Character::all();
         
-        return view('lists/character', [
+        return view('lists/characters/index', [
             'characters' => $characters,
         ]);
     }
@@ -47,6 +47,7 @@ class CharacterController extends Controller
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
         ]);
     }
     
@@ -67,6 +68,7 @@ class CharacterController extends Controller
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
         ]);
     }
     

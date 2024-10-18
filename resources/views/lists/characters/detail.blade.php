@@ -1,11 +1,4 @@
-@extends('layout')
-@section('content')
-<main>
-    <table class="detail">
-        <tr>
-            <th>ID</th>
-            <td>{{ $chara_id }}</td>
-        </tr>
+<table class="bar">
         <tr>
             <th>キャラクター名</th>
             <td>{{ $chara_name }}</td>
@@ -18,11 +11,10 @@
             <th>もっと詳しく</th>
             <td>{{ $chara_descript }}</td>
         </tr>
-    </table>
-    <div class="toolbox">
-        <a href="{{ route('charas.index') }}">一覧に戻る</a>
-        <a href="{{ route('charas.edit', ['chara' => $chara_id]) }}">編集</a>
-        <a href="{{ route('charas.delete', ['chara' => $chara_id]) }}">削除</a>
-    </div>
-</main>
-@endsection
+</table>
+<div class="toolbox">
+    <a href="{{ route('charas.index') }}">一覧表に戻る</a>
+    <a href="{{ route('charas.create') }}">新規作成</a>
+    <a href="{{ route('charas.edit', ['chara' => $chara_id]) }}">このデータを編集</a>
+    <a href="{{ route('charas.delete', ['chara' => $chara_id]) }}">このデータを削除</a>
+</div>

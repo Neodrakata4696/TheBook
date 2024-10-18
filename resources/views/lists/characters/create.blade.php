@@ -1,13 +1,18 @@
-@extends('layout')
-@section('content')
-<main>
-    <form method="post" action="{{ route('charas.create') }}">
-        <label for="name">キャラクター名</label>
-        <input type="text" name="name">
-        <label for="explain">説明文</label>
-        <input type="text" name="explain">
-        @csrf
-        <button type="submit">作成</button>
-    </form>
-</main>
-@endsection
+<form method="post" action="{{ route('charas.create') }}">
+    <table class="bar">
+        <tr>
+            <th>キャラクター名</th>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <th>説明</th>
+            <td><input type="text" name="explain"></td>
+        </tr>
+        <tr>
+            <th>もっと詳しく</th>
+            <td><input type="text" name="descript"></td>
+        </tr>
+    </table>
+    @csrf
+    <button type="submit">作成</button>
+</form>
