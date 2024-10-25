@@ -4,23 +4,64 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Character;
+use App\Http\Requests\CreateCharacter;
+use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        $user = $request->user();
         $characters = Character::all();
         
-        return view('lists/characters/index', [
+        return view('lists.characters.index', [
             'characters' => $characters,
         ]);
     }
     
     public function createForm(){
-        return view('lists/characters/create');
+        
+        return view('lists.characters.create');
     }
     
-    public function create(Request $request){
+    public function create(CreateCharacter $request){
         $chara = new Character();
+        $chara->name = $request->name;
+        $chara->explain = $request->explain;
+        $chara->descript = $request->descript;
+        Auth::user()->characters()->save($chara);
+        
+        return redirect()->route('charas.index');
+    }
+    
+    public function detail(Character $chara){
+        $chara->findOrFail($chara->id);
+        
+        return view('lists.characters.detail', [
+            'chara' => $chara,
+            'chara_id' => $chara->id,
+            'chara_name' => $chara->name,
+            'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
+            'chara_user' => $chara->user_id,
+        ]);
+    }
+    
+    public function editForm(Character $chara){
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
+        
+        return view('lists.characters.edit', [
+            'chara_id' => $chara->id,
+            'chara_name' => $chara->name,
+            'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
+        ]);
+    }
+    
+    public function edit(Character $chara, CreateCharacter $request){
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
+        
         $chara->name = $request->name;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
@@ -29,42 +70,11 @@ class CharacterController extends Controller
         return redirect()->route('charas.index');
     }
     
-    public function detail(Character $chara){
-        $chara->findOrFail($chara->id);
-        
-        return view('lists/characters/detail', [
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
-        ]);
-    }
-    
-    public function editForm(Character $chara){
-        $chara->findOrFail($chara->id);
-        
-        return view('lists/characters/edit', [
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
-        ]);
-    }
-    
-    public function edit(Character $chara, Request $request){
-        $chara->findOrFail($chara->id);
-        
-        $chara->name = $request->name;
-        $chara->explain = $request->explain;
-        $chara->save();
-        
-        return redirect()->route('charas.index');
-    }
-    
     public function deleteForm(Character $chara){
-        $chara->findOrFail($chara->id);
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
         
-        return view('lists/characters/delete', [
+        return view('lists.characters.delete', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_explain' => $chara->explain,
@@ -72,8 +82,9 @@ class CharacterController extends Controller
         ]);
     }
     
-    public function delete(Character $chara, Request $request){
-        $chara->findOrFail($chara->id);
+    public function delete(Character $chara){
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
         
         $chara->delete();
         
