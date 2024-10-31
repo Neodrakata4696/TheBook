@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Character;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
@@ -11,15 +12,43 @@ class CharacterController extends Controller
 {
     public function index(Request $request){
         $user = $request->user();
-        $characters = Character::all();
+        $list = Character::query();
+        
+        $keyword = $request->input('keyword');
+        if(!empty($keyword)) {
+            $list->where('name', 'LIKE', "%{$keyword}%")->get();
+        }
+        
+        $characters = $list->get();
         
         return view('lists.characters.index', [
             'characters' => $characters,
         ]);
     }
     
-    public function createForm(){
+    public function prindex(Request $request){
+        $user = Auth::user();
+        $characters = $user->characters()->get();
         
+        return view('lists.characters.prindex', [
+            'characters' => $characters,
+        ]);
+    }
+    
+    public function detail(Character $chara){
+        $chara->findOrFail($chara->id);
+        
+        return view('lists.characters.detail', [
+            'chara' => $chara,
+            'chara_id' => $chara->id,
+            'chara_name' => $chara->name,
+            'chara_explain' => $chara->explain,
+            'chara_descript' => $chara->descript,
+            'chara_user' => $chara->user->name,
+        ]);
+    }
+    
+    public function createForm(){
         return view('lists.characters.create');
     }
     
@@ -32,20 +61,7 @@ class CharacterController extends Controller
         
         return redirect()->route('charas.index');
     }
-    
-    public function detail(Character $chara){
-        $chara->findOrFail($chara->id);
         
-        return view('lists.characters.detail', [
-            'chara' => $chara,
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
-            'chara_user' => $chara->user_id,
-        ]);
-    }
-    
     public function editForm(Character $chara){
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);

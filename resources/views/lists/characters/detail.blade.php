@@ -4,6 +4,7 @@
             {{ __($chara_name. ' 詳細情報') }}
         </h2>
     </x-slot>
+    
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <table class="bar my-3 bg-white w-full">
             <tr>
@@ -25,11 +26,13 @@
         </table>
         <div class="toolbox">
             <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">一覧表に戻る</a>
+            @auth
             <a href="{{ route('charas.create') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
             @if($chara->user_id === Auth::user()->id)
             <a href="{{ route('charas.edit', ['chara' => $chara_id]) }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">このデータを編集</a>
             <a href="{{ route('charas.delete', ['chara' => $chara_id]) }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">このデータを削除</a>
             @endif
+            @endauth
         </div>
     </div>
 </x-app-layout>

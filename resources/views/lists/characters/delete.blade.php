@@ -8,18 +8,18 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <h2 class="text-red-500 text-xl my-3">削除したデータは元に戻りません。よろしいでしょうか。</h2>
         <form method="post" action="{{ route('charas.delete', ['chara' => $chara_id]) }}">
-            <table class="bar w-full bg-white my-3">
+            <table class="bar my-3 bg-white w-full">
                 <tr>
-                    <th>キャラクター名</th>
-                    <td class="w-10-12"><input type="text" name="name" readonly value="{{ old('name') ?? $chara_name }}" class="w-4/12"></td>
+                    <th class="w-1/12 bg-yellow-300">キャラクター名</th>
+                    <td class="border-l border-black">{{ $chara_name }}</td>
                 </tr>
-                <tr>
-                    <th>説明</th>
-                    <td class="w-10/12"><input type="text" name="explain" readonly value="{{ old('explain') ?? $chara_explain }}" class="w-9/12"></td>
+                <tr class="border-t border-black">
+                    <th class="w-1/12 bg-yellow-300">説明</th>
+                    <td class="border-l border-black">{{ $chara_explain }}</td>
                 </tr>
-                <tr>
-                    <th>もっと詳しく</th>
-                    <td class="w-10/12"><input type="text" name="descript" readonly value="{{ old('descript') ?? $chara_descript }}" class="w-full"></td>
+                <tr class="border-t border-black">
+                    <th class="w-1/12 bg-yellow-300">もっと詳しく</th>
+                    <td class="border-l border-black">{{ $chara_descript }}</td>
                 </tr>
             </table>
             @csrf

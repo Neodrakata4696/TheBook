@@ -48,7 +48,13 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        @endauth
+                        
+                        <x-dropdown-link :href="route('charas.prindex')">
+                            {{ __('作成キャラ一覧') }}
+                        </x-dropdown-link>
+                        
+                        @auth
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -111,7 +117,13 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
+                @endauth
+                
+                <x-responsive-nav-link :href="route('charas.prindex')">
+                    {{ __('作成キャラ一覧') }}
+                </x-responsive-nav-link>
+                
+                @auth
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

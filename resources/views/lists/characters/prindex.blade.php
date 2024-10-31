@@ -1,21 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('キャラクター') }}
-            </h2>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('作成キャラクター') }}
+        </h2>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <form method="get" action="{{ route('charas.index') }}" class="flex mt-4 justify-between">
-            @csrf
-            <input type="text" name="keyword" class="w-10/12">
-            <button type="submit" class="bg-blue-500 text-white px-3 py-2 shadow-sm sm:rounded-lg">検索</button>
-            @auth
-                <a href="{{ route('charas.create') }}" class="bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
-            @endauth
-        </form>
+        @auth
+        <div class="toolbox my-3">
+            <a href="{{ route('charas.create') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
+        </div>
+        @endauth
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th style="width:3%">ID</th>
