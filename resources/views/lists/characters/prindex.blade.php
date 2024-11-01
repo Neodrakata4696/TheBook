@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('作成キャラクター') }}
+            {{ __($user_name .'の作成キャラクター') }}
         </h2>
     </x-slot>
     
@@ -16,12 +16,14 @@
                 <th style="width:3%">ID</th>
                 <th class="border-l border-black w-3/12">キャラクター名</th>
                 <th class="border-l border-black">説明</th>
+                @auth
                 <th class="border-l border-black" style="width:10%">コマンド</th>
+                @endauth
             </tr>
             @foreach($characters as $character)
             <tr class="border-t border-black">
                 <td class="text-right">{{ $character->id }}</td>
-                <td class="border-l border-black">{{ $character->name }}</td>
+                <td class="border-l border-black text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
                 <td class="border-l border-black">{{ $character->explain }}</td>
                 <td class="border-l border-black text-center w-2/12">
                     <a href="{{ route('charas.detail', ['chara' => $character->id]) }}">詳細</a>

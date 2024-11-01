@@ -13,7 +13,7 @@
             </tr>
             <tr class="border-t border-black">
                 <th class="w-1/12 bg-yellow-300">作成ユーザー</th>
-                <td class="border-l border-black">{{ $chara_user }}</td>
+                <td class="border-l border-black"><a href="{{ route('charas.prindex', ['user' => $chara->user->id]) }}" class="text-sky-400">{{ $chara_user }}</a></td>
             </tr>
             <tr class="border-t border-black">
                 <th class="w-1/12 bg-yellow-300">説明</th>

@@ -24,7 +24,7 @@ Route::get('/charaList', [CharacterController::class, 'index'])->name('charas.in
 Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail')->where('chara', '[0-9]+');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/charaList/private', [CharacterController::class, 'prindex'])->name('charas.prindex');
+    Route::get('/charaList/user/{user}', [CharacterController::class, 'prindex'])->name('charas.prindex');
     
     Route::get('/charaList/create', [CharacterController::class, 'createForm'])->name('charas.create');
     Route::post('/charaList/create', [CharacterController::class, 'create']);

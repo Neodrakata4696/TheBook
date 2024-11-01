@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Models\Character;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,14 @@ class CharacterController extends Controller
         ]);
     }
     
-    public function prindex(Request $request){
-        $user = Auth::user();
+    public function prindex(User $user, Request $request){
+        $user->findOrFail($user->id);
         $characters = $user->characters()->get();
         
         return view('lists.characters.prindex', [
             'characters' => $characters,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
         ]);
     }
     

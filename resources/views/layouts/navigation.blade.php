@@ -50,7 +50,7 @@
                         </x-dropdown-link>
                         @endauth
                         
-                        <x-dropdown-link :href="route('charas.prindex')">
+                        <x-dropdown-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
                             {{ __('作成キャラ一覧') }}
                         </x-dropdown-link>
                         
@@ -99,7 +99,7 @@
                 {{ __('キャラクター一覧') }}
             </x-responsive-nav-link>
         </div>
-
+        
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
@@ -111,7 +111,7 @@
                 <div class="font-medium text-base text-gray-800">ゲスト</div>
                 @endguest
             </div>
-
+            
             <div class="mt-3 space-y-1">
                 @auth
                 <x-responsive-nav-link :href="route('profile.edit')">
@@ -119,7 +119,7 @@
                 </x-responsive-nav-link>
                 @endauth
                 
-                <x-responsive-nav-link :href="route('charas.prindex')">
+                <x-responsive-nav-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
                     {{ __('作成キャラ一覧') }}
                 </x-responsive-nav-link>
                 
