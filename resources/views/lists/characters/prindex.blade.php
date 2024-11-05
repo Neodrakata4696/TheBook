@@ -1,15 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($user_name .'の作成キャラクター') }}
+            {{ __($user_name .' List') }}
         </h2>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         @auth
+        @if($user_id === Auth::user()->id)
         <div class="toolbox my-3">
-            <a href="{{ route('charas.create') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
+            <a href="{{ route('charas.create') }}" class="block my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
         </div>
+        @endif
         @endauth
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">

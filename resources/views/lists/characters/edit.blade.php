@@ -7,7 +7,11 @@
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         @if($errors->any())
-        <p>これが見えるなら、名前を入力していないってことだ。</p>
+        <ul>
+            @foreach($errors->all() as $message)
+            <li>{{ $message }}</li>
+            @endforeach
+        </ul>
         @endif
         <form method="post" action="{{ route('charas.edit', ['chara' => $chara_id]) }}">
             <table class="bar w-full bg-white my-3">

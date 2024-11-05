@@ -48,13 +48,11 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-                        @endauth
                         
                         <x-dropdown-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
                             {{ __('作成キャラ一覧') }}
                         </x-dropdown-link>
                         
-                        @auth
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -62,13 +60,13 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Log out') }}
                             </x-dropdown-link>
                         </form>
                         @endauth
                         @guest
                         <x-dropdown-link :href="route('login')">
-                            {{ __('Log In') }}
+                            {{ __('Log in') }}
                         </x-dropdown-link>
                         @endguest
                     </x-slot>
@@ -117,13 +115,11 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-                @endauth
                 
                 <x-responsive-nav-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
                     {{ __('作成キャラ一覧') }}
                 </x-responsive-nav-link>
                 
-                @auth
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -131,13 +127,13 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Log out') }}
                     </x-responsive-nav-link>
                 </form>
                 @endauth
                 @guest
                 <x-responsive-nav-link :href="route('login')">
-                    {{ __('Log In') }}
+                    {{ __('Log in') }}
                 </x-responsive-nav-link>
                 @endguest
             </div>

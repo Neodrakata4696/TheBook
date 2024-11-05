@@ -1,5 +1,13 @@
 {
-    "Log In": "ログイン",
-    "Log Out": "ログアウト",
-    "Profile": "プロフィール"
+    "Log in": "ログイン",
+    "Log out": "ログアウト",
+    "Profile": "プロフィール",
+    "Name": "名前",
+    "Email": "メールアドレス",
+    "Password": "パスワード",
+    "Confirm Password": "パスワード再入力",
+    "Remember me": "ログインしたままにする",
+    "Register": "新規登録",
+    "Already registered?": "既に登録されている場合はこちら",
+    "Forgot your password?": "パスワードを忘れた場合はこちら"
 }
