@@ -1,8 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($user_name .' List') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __($user_name .' List') }}
+            </h2>
+            @if($follow_check === 0)
+            <form method="post" action="{{ route('users.follow', ['user' => $user_id]) }}">
+                @csrf
+                <input type="submit" class="bg-sky-400 text-white px-3" value="follow">
+            </form>
+            @else
+            <form method="post" action="{{ route('users.unfollow', ['user' => $user_id]) }}">
+                @csrf
+                <input type="submit" class="bg-red-400 text-white px-3" value="unfollow">
+            </form>
+            @endif
+        </div>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -24,7 +37,7 @@
             </tr>
             @foreach($characters as $character)
             <tr class="border-t border-black">
-                <td class="text-right">{{ $character->id }}</td>
+                <td class="text-right">{{ $loop->iteration }}</td>
                 <td class="border-l border-black text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
                 <td class="border-l border-black">{{ $character->explain }}</td>
                 <td class="border-l border-black text-center w-2/12">

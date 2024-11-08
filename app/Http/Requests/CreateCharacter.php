@@ -22,7 +22,8 @@ class CreateCharacter extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|max:20',
+            'explain' => 'max:140',
         ];
     }
 }

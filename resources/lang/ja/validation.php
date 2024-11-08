@@ -66,6 +66,7 @@ return [
     'ipv4' => ':attributeには、有効なIPv4アドレスを指定してください。',
     'ipv6' => ':attributeには、有効なIPv6アドレスを指定してください。',
     'json' => ':attributeには、有効なJSON文字列を指定してください。',
+    'lowercase' => ':attributeは、小文字、数字を入力してください。',
     'lt' => [
         'numeric' => ':attributeには、:valueより小さな値を指定してください。',
         'file' => ':attributeには、:value kBより小さなファイルを指定してください。',
@@ -158,7 +159,8 @@ return [
         'name' => '名前',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
-        'token' => 'トークン'
+        'token' => 'トークン',
+        'explain' => '説明文'
     ],
 
 ];

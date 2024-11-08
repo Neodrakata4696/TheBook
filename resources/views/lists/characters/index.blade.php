@@ -25,7 +25,7 @@
             </tr>
             @foreach($characters as $character)
             <tr class="border-t border-black">
-                <td class="text-right">{{ $character->id }}</td>
+                <td class="text-right">{{ $loop->iteration }}</td>
                 <td class="border-l border-black text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
                 <td class="border-l border-black">{{ $character->explain }}</td>
                 <td class="border-l border-black text-center w-2/12">

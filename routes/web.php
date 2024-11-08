@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\FollowUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,10 +25,13 @@ Route::get('/charaList', [CharacterController::class, 'index'])->name('charas.in
 Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail')->where('chara', '[0-9]+');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/charaList/user/{user}', [CharacterController::class, 'prindex'])->name('charas.prindex');
+    Route::get('/users/{user}', [CharacterController::class, 'prindex'])->name('charas.prindex');
     
     Route::get('/charaList/create', [CharacterController::class, 'createForm'])->name('charas.create');
     Route::post('/charaList/create', [CharacterController::class, 'create']);
+    
+    Route::post('/users/{user}/follow', [FollowUserController::class, 'follow'])->name('users.follow');
+    Route::post('/users/{user}/unfollow', [FollowUserController::class, 'unfollow'])->name('users.unfollow');
     
     Route::group(['middleware' => 'can:view,chara'], function() {
         Route::get('/charaList/{chara}/edit', [CharacterController::class, 'editForm'])->name('charas.edit');

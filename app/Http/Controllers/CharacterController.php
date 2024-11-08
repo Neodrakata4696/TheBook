@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Character;
+use App\Models\FollowUser;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class CharacterController extends Controller
         
         $keyword = $request->input('keyword');
         if(!empty($keyword)) {
-            $list->where('name', 'LIKE', "%{$keyword}%")->get();
+            $list->where('name', 'LIKE', "%{$keyword}%")->orWhere('explain', 'LIKE', "%{$keyword}%")->get();
         }
         
         $characters = $list->get();
@@ -31,10 +32,13 @@ class CharacterController extends Controller
         $user->findOrFail($user->id);
         $characters = $user->characters()->get();
         
+        $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
+        
         return view('lists.characters.prindex', [
             'characters' => $characters,
             'user_id' => $user->id,
             'user_name' => $user->name,
+            'follow_check' => $check->count(),
         ]);
     }
     
