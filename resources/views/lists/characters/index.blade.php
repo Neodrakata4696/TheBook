@@ -18,25 +18,15 @@
         @endauth
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
-                <th style="width:3%">ID</th>
-                <th class="border-l border-black w-3/12">キャラクター名</th>
+                <th class="w-2/12">キャラクター名</th>
                 <th class="border-l border-black">説明</th>
-                <th class="border-l border-black" style="width:10%">コマンド</th>
+                <th class="border-l border-black w-3/12">作成者</th>
             </tr>
             @foreach($characters as $character)
             <tr class="border-t border-black">
-                <td class="text-right">{{ $loop->iteration }}</td>
-                <td class="border-l border-black text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
+                <td class="text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
                 <td class="border-l border-black">{{ $character->explain }}</td>
-                <td class="border-l border-black text-center w-2/12">
-                    <a href="{{ route('charas.detail', ['chara' => $character->id]) }}">詳細</a>
-                    @auth
-                    @if($character->user_id === Auth::user()->id)                    
-                    <a href="{{ route('charas.edit', ['chara' => $character->id]) }}">編集</a>
-                    <a href="{{ route('charas.delete', ['chara' => $character->id]) }}">削除</a>
-                    @endif
-                    @endauth
-                </td>
+                <td class="border-l border-black"><a href="{{ route('charas.prindex', ['user' => $character->user->id]) }}" class="text-sky-800">{{ $character->user->name }}</a></td>
             </tr>
             @endforeach
         </table>

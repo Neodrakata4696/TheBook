@@ -45,12 +45,19 @@
 
                     <x-slot name="content">
                         @auth
+                        <x-dropdown-link :href="route('users.followIndex', ['user' => Auth::user()->id] )">
+                            {{ __('followList') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('users.followerIndex', ['user' => Auth::user()->id])">
+                            {{ __('followerList') }}
+                        </x-dropdown-link>
+                        
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         
                         <x-dropdown-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
-                            {{ __('作成キャラ一覧') }}
+                            {{ __('created characterList') }}
                         </x-dropdown-link>
                         
                         <!-- Authentication -->
@@ -112,12 +119,19 @@
             
             <div class="mt-3 space-y-1">
                 @auth
+                <x-responsive-nav-link :href="route('users.followIndex', ['user' => Auth::user()->id] )">
+                    {{ __('followList') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('users.followerIndex', ['user' => Auth::user()->id] )">
+                    {{ __('followerList') }}
+                </x-responsive-nav-link>
+                
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 
                 <x-responsive-nav-link :href="route( 'charas.prindex', ['user' => Auth::user()->id] )">
-                    {{ __('作成キャラ一覧') }}
+                    {{ __('created characterList') }}
                 </x-responsive-nav-link>
                 
                 <!-- Authentication -->

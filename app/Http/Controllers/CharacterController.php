@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class CharacterController extends Controller
 {
     public function index(Request $request){
-        $user = $request->user();
         $list = Character::query();
         
         $keyword = $request->input('keyword');

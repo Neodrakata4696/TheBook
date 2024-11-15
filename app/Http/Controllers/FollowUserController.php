@@ -9,6 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowUserController extends Controller
 {
+    public function followIndex(User $user) {
+        $user->findOrFail($user->id);
+        $followeds = FollowUser::where('following_user_id', $user->id)->get();
+        
+        return view('follow.follow', [
+            'followeds' => $followeds,
+        ]);
+    }
+    
+    public function followerIndex(User $user) {
+        $user->findOrFail($user->id);
+        $followings = FollowUser::where('followed_user_id', $user->id)->get();
+        
+        return view('follow.follower', [
+            'followings' => $followings,
+        ]);
+    }
+    
     public function follow(User $user) {
         $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
         

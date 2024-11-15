@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('followList') }}
+                {{ __('followerList') }}
             </h2>
         </div>
     </x-slot>
@@ -13,18 +13,18 @@
                 <th>ユーザー名</th>
                 <th class="border-l border-black w-2/12">ボタン</th>
             </tr>
-            @foreach($followeds as $followed)
+            @foreach($followings as $following)
             <tr class="border-t border-black">
-                <td><a href="{{ route('charas.prindex', ['user' => $followed->followed->id]) }}" class="text-sky-800">{{ $followed->followed->name }}</a></td>
+                <td><a href="{{ route('charas.prindex', ['user' => $following->following->id]) }}" class="text-sky-800">{{ $following->following->name }}</a></td>
                 <td class="border-l border-black text-center">
-                    @if($followed->followed->id !== Auth::user()->id)
-                        @if($followed->where('followed_user_id', $followed->followed->id)->where('following_user_id', Auth::user()->id)->count() === 0)
-                        <form method="post" action="{{ route('users.follow', ['user' => $followed->followed->id]) }}">
+                    @if($following->following->id !== Auth::user()->id)
+                        @if($following->where('following_user_id', Auth::user()->id)->where('followed_user_id', $following->following->id)->count() === 0)
+                        <form method="post" action="{{ route('users.follow', ['user' => $following->following->id]) }}">
                             @csrf
                             <input type="submit" class="bg-sky-400 text-white px-3" value="follow">
                         </form>
                         @else
-                        <form method="post" action="{{ route('users.unfollow', ['user' => $followed->followed->id]) }}">
+                        <form method="post" action="{{ route('users.unfollow', ['user' => $following->following->id]) }}">
                             @csrf
                             <input type="submit" class="bg-red-400 text-white px-3" value="unfollow">
                         </form>

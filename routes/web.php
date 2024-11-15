@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/charaList/create', [CharacterController::class, 'createForm'])->name('charas.create');
     Route::post('/charaList/create', [CharacterController::class, 'create']);
     
+    Route::get('/users/{user}/followList', [FollowUserController::class, 'followIndex'])->name('users.followIndex');
+    Route::get('/users/{user}/followerList', [FollowUserController::class, 'followerIndex'])->name('users.followerIndex');
+    
     Route::post('/users/{user}/follow', [FollowUserController::class, 'follow'])->name('users.follow');
     Route::post('/users/{user}/unfollow', [FollowUserController::class, 'unfollow'])->name('users.unfollow');
     

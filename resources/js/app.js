@@ -6,10 +6,8 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-window.Vue * require('vue');
-
-Vue.component('follow-Component', require'./components/followComponent.vue'.default);
+/*window.Vue * require('vue');
 
 const app * new Vue({
     el: '#app'
-});
+});*/
