@@ -8,17 +8,14 @@
                 <x-nav-link :href="route('users.followIndex', ['user' => $user_id])" :active="request()->routeIs('users.followIndex')">フォロー</x-nav-link>
                 <x-nav-link :href="route('users.followerIndex', ['user' => $user_id])" :active="request()->routeIs('users.followerIndex')">フォロワー</x-nav-link>
                 @if($user_id !== Auth::user()->id)
+                <form>
+                    @csrf
                     @if($follow_check === 0)
-                    <form method="post" action="{{ route('users.follow', ['user' => $user_id]) }}">
-                        @csrf
-                        <input type="submit" class="bg-sky-400 text-white px-3" value="follow">
-                    </form>
+                    <button type="button" class="bg-sky-400 text-white px-3" id="follow">follow</button>
                     @else
-                    <form method="post" action="{{ route('users.unfollow', ['user' => $user_id]) }}">
-                        @csrf
-                        <input type="submit" class="bg-red-400 text-white px-3" value="unfollow">
-                    </form>
+                    <button type="button" class="bg-red-400 text-white px-3" id="unfollow">unfollow</button>
                     @endif
+                </form>
                 @endif
             </div>
         </div>
@@ -57,4 +54,44 @@
             @endforeach
         </table>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")},
+        })
+        
+        $('#follow').on('click', function() {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('users.follow', ['user' => $user_id]) }}",
+                dataType: "json",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+            })
+            .done(function(res) {
+                console.log(res.follow_check);
+            })
+            .fail(function() {
+                alert("失敗しました。");
+            });
+        });
+        $('#unfollow').on('click', function() {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('users.unfollow', ['user' => $user_id]) }}",
+                dataType: "json",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+            })
+            .done(function(res) {
+                console.log(res);
+            })
+            .fail(function() {
+                alert("失敗しました。");
+            });
+        });
+    </script>
 </x-app-layout>

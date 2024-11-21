@@ -35,14 +35,16 @@ class FollowUserController extends Controller
             $follow->following_user_id = Auth::user()->id;
             $follow->followed_user_id = $user->id;
             $follow->save();
+        else:
+            $follow = "mou follow site imasuyo. hahaha";
         endif;
         
-        return redirect()->route('charas.prindex', $user->id);
+        return response()->json($follow);
     }
 
     public function unfollow(User $user) {
         $unfollowing = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->delete();
         
-        return redirect()->route('charas.prindex', $user->id);
+        return response()->json($unfollowing);
     }
 }
