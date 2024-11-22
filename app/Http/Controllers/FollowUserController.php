@@ -5,10 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\FollowUser;
+use App\Models\Character;
 use Illuminate\Support\Facades\Auth;
 
 class FollowUserController extends Controller
 {
+    public function userIndex(User $user, Request $request){
+        $user->findOrFail($user->id);
+        $characters = $user->characters()->get();
+        
+        $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
+        
+        return view('lists.characters.prindex', [
+            'characters' => $characters,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'follow_check' => $check->count(),
+        ]);
+    }
+    
     public function followIndex(User $user) {
         $user->findOrFail($user->id);
         $followeds = FollowUser::where('following_user_id', $user->id)->get();
@@ -28,23 +43,17 @@ class FollowUserController extends Controller
     }
     
     public function follow(User $user) {
-        $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
+        $check = (boolean) FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->first();
         
-        if($check->count() == 0):
+        if ($check):
+            $follow = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->delete();
+        else:
             $follow = new FollowUser;
             $follow->following_user_id = Auth::user()->id;
             $follow->followed_user_id = $user->id;
             $follow->save();
-        else:
-            $follow = "mou follow site imasuyo. hahaha";
         endif;
         
         return response()->json($follow);
-    }
-
-    public function unfollow(User $user) {
-        $unfollowing = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->delete();
-        
-        return response()->json($unfollowing);
     }
 }

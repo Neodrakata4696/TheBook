@@ -17,21 +17,8 @@
             <tr class="border-t border-black">
                 <td><a href="{{ route('charas.prindex', ['user' => $following->following->id]) }}" class="text-sky-800">{{ $following->following->name }}</a></td>
                 <td class="border-l border-black text-center">
-                    @if($following->following->id !== Auth::user()->id)
-                        @if($following->where('following_user_id', Auth::user()->id)->where('followed_user_id', $following->following->id)->count() === 0)
-                        <form method="post" action="{{ route('users.follow', ['user' => $following->following->id]) }}">
-                            @csrf
-                            <input type="submit" class="bg-sky-400 text-white px-3" id="follow" value="follow">
-                        </form>
-                        @else
-                        <form method="post" action="{{ route('users.unfollow', ['user' => $following->following->id]) }}">
-                            @csrf
-                            <input type="submit" class="bg-red-400 text-white px-3" id="unfollow" value="unfollow">
-                        </form>
-                        @endif
-                    @else
-                        このアカウントです
-                    @endif
+                    @csrf
+                    <input type="submit" class="bg-sky-400 text-white px-3" id="follow" value="follow">
                 </td>
             </tr>
             @endforeach

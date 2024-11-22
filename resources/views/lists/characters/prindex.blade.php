@@ -10,11 +10,7 @@
                 @if($user_id !== Auth::user()->id)
                 <form>
                     @csrf
-                    @if($follow_check === 0)
                     <button type="button" class="bg-sky-400 text-white px-3" id="follow">follow</button>
-                    @else
-                    <button type="button" class="bg-red-400 text-white px-3" id="unfollow">unfollow</button>
-                    @endif
                 </form>
                 @endif
             </div>
@@ -69,25 +65,6 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                 },
-            })
-            .done(function(res) {
-                console.log(res.follow_check);
-            })
-            .fail(function() {
-                alert("失敗しました。");
-            });
-        });
-        $('#unfollow').on('click', function() {
-            $.ajax({
-                method: "POST",
-                url: "{{ route('users.unfollow', ['user' => $user_id]) }}",
-                dataType: "json",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                },
-            })
-            .done(function(res) {
-                console.log(res);
             })
             .fail(function() {
                 alert("失敗しました。");
