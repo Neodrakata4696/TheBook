@@ -15,10 +15,16 @@
             </tr>
             @foreach($followings as $following)
             <tr class="border-t border-black">
-                <td><a href="{{ route('charas.prindex', ['user' => $following->following->id]) }}" class="text-sky-800">{{ $following->following->name }}</a></td>
+                <td><a href="{{ route('users.index', ['user' => $following->following->id]) }}" class="text-sky-800">{{ $following->following->name }}</a></td>
                 <td class="border-l border-black text-center">
-                    @csrf
-                    <input type="submit" class="bg-sky-400 text-white px-3" id="follow" value="follow">
+                    @if($following->following->id !== Auth::user()->id)
+                        @csrf
+                        @if($following->following->isFollowedBy(Auth::user()))
+                        <button type="button" class="bg-red-400 text-white px-3" id="follow">unfollow</button>
+                        @else
+                        <button type="button" class="bg-sky-400 text-white px-3" id="follow">follow</button>
+                        @endif
+                    @endif
                 </td>
             </tr>
             @endforeach

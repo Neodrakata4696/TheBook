@@ -14,13 +14,9 @@ class FollowUserController extends Controller
         $user->findOrFail($user->id);
         $characters = $user->characters()->get();
         
-        $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
-        
         return view('lists.characters.prindex', [
             'characters' => $characters,
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'follow_check' => $check->count(),
+            'user' => $user,
         ]);
     }
     
@@ -43,7 +39,7 @@ class FollowUserController extends Controller
     }
     
     public function follow(User $user) {
-        $check = (boolean) FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->first();
+        $check = (boolean) $user->isFollowedBy(Auth::user());
         
         if ($check):
             $follow = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id)->delete();

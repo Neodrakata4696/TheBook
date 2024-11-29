@@ -27,20 +27,6 @@ class CharacterController extends Controller
         ]);
     }
     
-    public function prindex(User $user, Request $request){
-        $user->findOrFail($user->id);
-        $characters = $user->characters()->get();
-        
-        $check = FollowUser::where('following_user_id', Auth::user()->id)->where('followed_user_id', $user->id);
-        
-        return view('lists.characters.prindex', [
-            'characters' => $characters,
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'follow_check' => $check->count(),
-        ]);
-    }
-    
     public function detail(Character $chara){
         $chara->findOrFail($chara->id);
         
