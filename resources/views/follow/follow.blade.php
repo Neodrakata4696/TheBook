@@ -20,43 +20,18 @@
                     @if($followed->followed->id !== Auth::user()->id)
                         @csrf
                         @if($followed->followed->isFollowedBy(Auth::user()))
-                        <button type="button" class="bg-red-400 text-white px-3" id="follow">unfollow</button>
+                        <button type="button" class="bg-red-400 text-white px-3" id="follow" value="{{ route('users.follow', $followed->followed->id) }}">unfollow</button>
                         @else
-                        <button type="button" class="bg-sky-400 text-white px-3" id="follow">follow</button>
+                        <button type="button" class="bg-sky-400 text-white px-3" id="follow" value="{{ route('users.follow', $followed->followed->id) }}">follow</button>
                         @endif
                     @endif
                 </td>
             </tr>
+            <script>
+                var user = document.getElementById("follow").value;
+                @include('scripts.followSystem')
+            </script>
             @endforeach
         </table>
     </div>
-    <script>
-        $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")},
-        })
-
-        $('#follow').on('click', function() {
-            $.ajax({
-                method: "POST",
-                url: "route('users.follow', $followed->followed->id)",
-                dataType: "json",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                },
-            })
-            .done(function(res) {
-                console.log(res);
-                $('#follow').toggleClass('bg-sky-400 bg-red-400');
-                if($('#follow').text() === 'follow'){
-                    $('#follow').text('unfollow');
-                }
-                else{
-                    $('#follow').text('follow');
-                }
-            })
-            .fail(function() {
-                alert("失敗しました。");
-            });
-        });
-    </script>
 </x-app-layout>
