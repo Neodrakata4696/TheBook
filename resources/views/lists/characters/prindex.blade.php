@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
                 {{ __($user->name .' List') }}
             </h2>
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+            <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <x-nav-link :href="route('users.followIndex', ['user' => $user->id])" :active="request()->routeIs('users.followIndex')">フォロー</x-nav-link>
                 <x-nav-link :href="route('users.followerIndex', ['user' => $user->id])" :active="request()->routeIs('users.followerIndex')">フォロワー</x-nav-link>
                 @if($user->id !== Auth::user()->id)
                 <form>
                     @csrf
                     @if($user->isFollowedBy(Auth::user()))
-                    <button type="button" class="bg-red-400 text-white px-3" id="follow">unfollow</button>
+                    <button type="button" class="follow bg-red-400 text-white px-3" value="{{ route('users.follow', $user->id) }}">unfollow</button>
                     @else
-                    <button type="button" class="bg-sky-400 text-white px-3" id="follow">follow</button>
+                    <button type="button" class="follow bg-sky-400 text-white px-3" value="{{ route('users.follow', $user->id) }}">follow</button>
                     @endif
                 </form>
                 @endif
@@ -53,9 +53,7 @@
             </tr>
             @endforeach
         </table>
+        {!! $characters->render() !!}
     </div>
-    <script>
-        const user = "{{ route('users.follow', $user->id) }}";
-        @include('scripts.followSystem')
-    </script>
+    @include('scripts.followSystem')
 </x-app-layout>

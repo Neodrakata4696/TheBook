@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex">
+        <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('キャラクター') }}
             </h2>
+            <div class="flex">
+                @auth
+                    <a href="{{ route('charas.create') }}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">新規作成</a>
+                @endauth
+            </div>
         </div>
     </x-slot>
     
@@ -13,9 +18,7 @@
             <input type="text" name="keyword" class="w-11/12">
             <button type="submit" class="bg-blue-500 text-white px-3 py-2 mx-auto shadow-sm sm:rounded-lg">検索</button>
         </form>
-        @auth
-            <a href="{{ route('charas.create') }}" class="block my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>
-        @endauth
+        @if($characters->count() !== 0)
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>
@@ -30,5 +33,12 @@
             </tr>
             @endforeach
         </table>
+        {!! $characters->render() !!}
+        @else
+        <div class="text-center">キャラクターは誰もいません</div>
+        @auth
+        <div class="text-center">まずは右上からキャラクターを作成しましょう</div>
+        @endauth
+        @endif
     </div>
 </x-app-layout>

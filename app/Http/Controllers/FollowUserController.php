@@ -12,7 +12,7 @@ class FollowUserController extends Controller
 {
     public function userIndex(User $user, Request $request){
         $user->findOrFail($user->id);
-        $characters = $user->characters()->get();
+        $characters = $user->characters()->latest()->paginate(15);
         
         return view('lists.characters.prindex', [
             'characters' => $characters,
@@ -22,7 +22,7 @@ class FollowUserController extends Controller
     
     public function followIndex(User $user) {
         $user->findOrFail($user->id);
-        $followeds = FollowUser::where('following_user_id', $user->id)->get();
+        $followeds = FollowUser::where('following_user_id', $user->id)->latest()->paginate(15);
         
         return view('follow.follow', [
             'followeds' => $followeds,
@@ -31,7 +31,7 @@ class FollowUserController extends Controller
     
     public function followerIndex(User $user) {
         $user->findOrFail($user->id);
-        $followings = FollowUser::where('followed_user_id', $user->id)->get();
+        $followings = FollowUser::where('followed_user_id', $user->id)->latest()->paginate(15);
         
         return view('follow.follower', [
             'followings' => $followings,

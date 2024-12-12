@@ -9,5 +9,9 @@
     "Remember me": "ログインしたままにする",
     "Register": "新規登録",
     "Already registered?": "既に登録されている場合はこちら",
-    "Forgot your password?": "パスワードを忘れた場合はこちら"
+    "Forgot your password?": "パスワードを忘れた場合はこちら",
+    "followList": "フォロー",
+    "followerList": "フォロワー",
+    "created characterList": "作成キャラ",
+    "Top Page": "トップページへ戻る"
 }

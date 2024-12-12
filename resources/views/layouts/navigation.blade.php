@@ -75,7 +75,13 @@
                         <x-dropdown-link :href="route('login')">
                             {{ __('Log in') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('register')">
+                            {{ __('Register') }}
+                        </x-dropdown-link>
                         @endguest
+                        <x-dropdown-link :href="route('toppage')">
+                            {{ __('Top Page') }}
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -149,7 +155,13 @@
                 <x-responsive-nav-link :href="route('login')">
                     {{ __('Log in') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
                 @endguest
+                <x-responsive-nav-link :href="route('toppage')">
+                    {{ __('Top Page') }}
+                </x-responsive-nav-link>
             </div>
         </div>
     </div>

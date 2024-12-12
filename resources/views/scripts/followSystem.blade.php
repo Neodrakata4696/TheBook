@@ -1,11 +1,13 @@
+<script>
 $.ajaxSetup({
     headers: { 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")},
 })
 
-$('#follow').on('click', function() {
+$('.follow').on('click', function(event) {
+    var follow_user = $(event.target);
     $.ajax({
         method: "POST",
-        url: user,
+        url: follow_user.val(),
         dataType: "json",
         data: {
             "_token": "{{ csrf_token() }}",
@@ -13,15 +15,16 @@ $('#follow').on('click', function() {
     })
     .done(function(res) {
         console.log(res);
-        $('#follow').toggleClass('bg-sky-400 bg-red-400');
-        if($('#follow').text() === 'follow'){
-            $('#follow').text('unfollow');
+        follow_user.toggleClass('bg-sky-400 bg-red-400');
+        if(follow_user.text() === 'follow'){
+            follow_user.text('unfollow');
         }
         else{
-            $('#follow').text('follow');
+            follow_user.text('follow');
         }
     })
     .fail(function() {
         alert("失敗しました。");
     });
 });
+</script>

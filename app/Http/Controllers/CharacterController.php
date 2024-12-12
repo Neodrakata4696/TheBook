@@ -20,7 +20,7 @@ class CharacterController extends Controller
             $list->where('name', 'LIKE', "%{$keyword}%")->orWhere('explain', 'LIKE', "%{$keyword}%")->get();
         }
         
-        $characters = $list->get();
+        $characters = $list->latest()->paginate(15);
         
         return view('lists.characters.index', [
             'characters' => $characters,

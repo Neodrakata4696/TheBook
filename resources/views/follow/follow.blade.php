@@ -20,18 +20,16 @@
                     @if($followed->followed->id !== Auth::user()->id)
                         @csrf
                         @if($followed->followed->isFollowedBy(Auth::user()))
-                        <button type="button" class="bg-red-400 text-white px-3" id="follow" value="{{ route('users.follow', $followed->followed->id) }}">unfollow</button>
+                        <button type="button" class="follow bg-red-400 text-white px-3" value="{{ route('users.follow', $followed->followed->id) }}">unfollow</button>
                         @else
-                        <button type="button" class="bg-sky-400 text-white px-3" id="follow" value="{{ route('users.follow', $followed->followed->id) }}">follow</button>
+                        <button type="button" class="follow bg-sky-400 text-white px-3" value="{{ route('users.follow', $followed->followed->id) }}">follow</button>
                         @endif
                     @endif
                 </td>
             </tr>
-            <script>
-                var user = document.getElementById("follow").value;
-                @include('scripts.followSystem')
-            </script>
             @endforeach
         </table>
+        {!! $followeds->render() !!}
     </div>
+    @include('scripts.followSystem')
 </x-app-layout>
