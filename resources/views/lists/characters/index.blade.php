@@ -13,12 +13,12 @@
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        @if($characters->count() !== 0)
         <form method="get" action="{{ route('charas.index') }}" class="flex mt-4 my-4">
             @csrf
             <input type="text" name="keyword" class="w-11/12">
             <button type="submit" class="bg-blue-500 text-white px-3 py-2 mx-auto shadow-sm sm:rounded-lg">検索</button>
         </form>
-        @if($characters->count() !== 0)
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>
@@ -35,10 +35,12 @@
         </table>
         {!! $characters->render() !!}
         @else
-        <div class="text-center">キャラクターは誰もいません</div>
-        @auth
-        <div class="text-center">まずは右上からキャラクターを作成しましょう</div>
-        @endauth
+        <div class="pt-8">
+            <div class="text-center">キャラクターは誰もいません</div>
+            @auth
+            <div class="text-center">まずは右上からキャラクターを作成しましょう</div>
+            @endauth
+        </div>
         @endif
     </div>
 </x-app-layout>

@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
-                {{ __($user->name .' List') }}
+                {{$user->name}}{{ __(' List') }}
             </h2>
             <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <x-nav-link :href="route('users.followIndex', ['user' => $user->id])" :active="request()->routeIs('users.followIndex')">フォロー</x-nav-link>
@@ -29,6 +29,7 @@
         </div>
         @endif
         @endauth
+        @if($characters->count() !== 0)
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>
@@ -54,6 +55,11 @@
             @endforeach
         </table>
         {!! $characters->render() !!}
+        @else
+        <div class="pt-8">
+            <div class="text-center">このユーザーが作成したキャラクターは誰もいません</div>
+        </div>
+        @endif
     </div>
     @include('scripts.followSystem')
 </x-app-layout>

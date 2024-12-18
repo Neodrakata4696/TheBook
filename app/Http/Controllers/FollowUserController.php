@@ -26,6 +26,7 @@ class FollowUserController extends Controller
         
         return view('follow.follow', [
             'followeds' => $followeds,
+            'user_name' => $user->name,
         ]);
     }
     
@@ -35,6 +36,7 @@ class FollowUserController extends Controller
         
         return view('follow.follower', [
             'followings' => $followings,
+            'user_name' => $user->name,
         ]);
     }
     

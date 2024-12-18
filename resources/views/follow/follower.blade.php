@@ -2,12 +2,13 @@
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('followerList') }}
+                {{$user_name}}{{ __(' followerList') }}
             </h2>
         </div>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        @if($followings->count() !== 0)
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th>ユーザー名</th>
@@ -30,6 +31,11 @@
             @endforeach
         </table>
         {!! $followings->render() !!}
+        @else
+        <div class="pt-8">
+            <div class="text-center">このユーザーをフォローしたユーザーはいません</div>
+        </div>
+        @endif
     </div>
     @include('scripts.followSystem')
 </x-app-layout>

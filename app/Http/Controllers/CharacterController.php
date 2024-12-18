@@ -75,7 +75,7 @@ class CharacterController extends Controller
         $chara->descript = $request->descript;
         $chara->save();
         
-        return redirect()->route('charas.index');
+        return redirect()->route('charas.detail', ['chara' => $chara]);
     }
     
     public function deleteForm(Character $chara){

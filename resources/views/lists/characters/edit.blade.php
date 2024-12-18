@@ -21,11 +21,11 @@
                 </tr>
                 <tr>
                     <th>説明</th>
-                    <td class="w-10/12"><input type="text" name="explain" value="{{ old('explain') ?? $chara_explain }}" class="w-9/12"></td>
+                    <td class="w-10/12"><textarea type="text" name="explain" value="{{ old('explain') ?? $chara_explain }}" class="w-full"></textarea></td>
                 </tr>
                 <tr>
                     <th>もっと詳しく</th>
-                    <td class="w-10/12"><input type="text" name="descript" value="{{ old('descript') ?? $chara_descript }}" class="w-full"></td>
+                    <td class="w-10/12"><textarea type="text" name="descript" value="{{ old('descript') ?? $chara_descript }}" class="w-full"></textarea></td>
                 </tr>
             </table>
             @csrf

@@ -1,7 +1,9 @@
 {
+    "Cancel": "キャンセル",
     "Log in": "ログイン",
     "Log out": "ログアウト",
     "Profile": "プロフィール",
+    "Save": "保存",
     "Name": "名前",
     "Email": "メールアドレス",
     "Password": "パスワード",
@@ -13,5 +15,19 @@
     "followList": "フォロー",
     "followerList": "フォロワー",
     "created characterList": "作成キャラ",
-    "Top Page": "トップページへ戻る"
+    " List": "の作成キャラ",
+    " followList": "のフォローユーザー",
+    " followerList": "のフォロワー",
+    "Top Page": "トップページへ戻る",
+    "Profile": "プロフィール",
+    "Profile Information": "プロフィール情報",
+    "Update your account's profile information and email address.": "アカウント名とメールアドレスを変更します。",
+    "Update Password": "パスワード更新",
+    "Current Password": "現在のパスワード",
+    "New Password": "新しいパスワード",
+    "Ensure your account is using a long, random password to stay secure.": "安全を保つために、アカウントで長くてランダムなパスワードを使用していることを確認してください。",
+    "Delete Account": "アカウントを削除",
+    "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "アカウントを削除すると、全てのデータが削除され、無くなります。バックアップしてから実行することをおすすめします。",
+    "Are you sure you want to delete your account?": "本当に削除しますか？",
+    "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "繰り返しますが、アカウントを削除すると、全てのデータが削除され、無くなります。バックアップが完了したなら、パスワードを入力して削除を実行してください。"
 }
