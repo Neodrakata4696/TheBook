@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <a href="http://localhost/TheBook/charaList/create" class="block mx-4 my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">簡単！キャラクター新規作成</a>
+                <a href="{{route('charas.create')}}" class="block mx-4 my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">簡単！キャラクター新規作成</a>
                 @if($characters->count() !== 0)
                 <h2 class="px-6">最新キャラクター</h2>
                 @foreach($characters as $character)
@@ -18,6 +18,7 @@
                     <a href="{{route('charas.detail', ['chara' => $character->id])}}" class="text-sky-800">more</a>
                 </div>
                 @endforeach
+                <a href="{{route('charas.index')}}" class="block mx-4 my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">キャラクターリストへ</a>
                 @endif
             </div>
         </div>

@@ -28,7 +28,7 @@
             @foreach($characters as $character)
             <tr class="border-t border-black">
                 <td class="text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
-                <td class="border-l border-black">{{ $character->explain }}</td>
+                <td class="border-l border-black">{{ Str::limit($character->explain, 95) }}</td>
                 <td class="border-l border-black"><a href="{{ route('users.index', ['user' => $character->user->id]) }}" class="text-sky-800">{{ $character->user->name }}</a></td>
             </tr>
             @endforeach

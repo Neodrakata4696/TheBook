@@ -9,6 +9,7 @@ use App\Models\Character;
 use App\Models\FollowUser;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CharacterController extends Controller
 {

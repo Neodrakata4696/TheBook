@@ -21,16 +21,16 @@
                 </tr>
                 <tr>
                     <th>説明</th>
-                    <td class="w-10/12"><textarea type="text" name="explain" value="{{ old('explain') ?? $chara_explain }}" class="w-full"></textarea></td>
+                    <td class="w-10/12"><textarea type="text" name="explain" class="w-full">{{ old('explain') ?? $chara_explain }}</textarea></td>
                 </tr>
                 <tr>
                     <th>もっと詳しく</th>
-                    <td class="w-10/12"><textarea type="text" name="descript" value="{{ old('descript') ?? $chara_descript }}" class="w-full"></textarea></td>
+                    <td class="w-10/12"><textarea type="text" name="descript" class="w-full">{{ old('descript') ?? $chara_descript }}</textarea></td>
                 </tr>
             </table>
             @csrf
             <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">編集完了</button>
-            <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</a>
+            <button type="button" onclick="history.back();" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</button>
         </form>
     </div>
 </x-app-layout>

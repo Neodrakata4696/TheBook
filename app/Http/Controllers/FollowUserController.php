@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\FollowUser;
 use App\Models\Character;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FollowUserController extends Controller
 {

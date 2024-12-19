@@ -30,7 +30,7 @@
             </table>
             @csrf
             <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">作成</button>
-            <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</a>
+            <button type="button" onclick="history.back()" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</button>
         </form>
     </div>
 </x-app-layout>
