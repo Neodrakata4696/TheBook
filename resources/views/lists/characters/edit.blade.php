@@ -21,11 +21,17 @@
                 </tr>
                 <tr>
                     <th>説明</th>
-                    <td class="w-10/12"><textarea type="text" name="explain" class="w-full">{{ old('explain') ?? $chara_explain }}</textarea></td>
+                    <td class="textboard w-10/12">
+                        <div class="dummy_textarea" aria-hidden="true"></div>
+                        <textarea type="text" name="explain" class="retextarea w-full h-full">{{ old('explain') ?? $chara_explain }}</textarea>
+                    </td>
                 </tr>
                 <tr>
                     <th>もっと詳しく</th>
-                    <td class="w-10/12"><textarea type="text" name="descript" class="w-full">{{ old('descript') ?? $chara_descript }}</textarea></td>
+                    <td class="textboard w-10/12">
+                        <div class="dummy_textarea" aria-hidden="true"></div>
+                        <textarea type="text" name="descript" class="retextarea w-full h-full">{{ old('descript') ?? $chara_descript }}</textarea>
+                    </td>
                 </tr>
             </table>
             @csrf
@@ -33,4 +39,5 @@
             <button type="button" onclick="history.back();" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</button>
         </form>
     </div>
+    <script src="{{ asset('/js/resize.js') }}"></script>
 </x-app-layout>

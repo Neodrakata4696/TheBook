@@ -10,6 +10,35 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <style>
+            .textboard{
+                position: relative;
+                display: block;
+                margin: 1px;
+                font-size: 1rem;
+            }
+            
+            .dummy_textarea{
+                visibility: hidden;
+                padding: 5px 15px;
+                min-height: 40px;
+                overflow: hidden;
+                white-space: pre-wrap;
+                box-sizing: border-box;
+                word-wrap: break-word;
+            }
+            
+            .retextarea{
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                padding: 5px 15px;
+                overflow: hidden;
+                resize: none;
+                box-sizing: border-box;
+            }
+        </style>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
