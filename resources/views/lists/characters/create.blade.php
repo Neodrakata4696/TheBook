@@ -16,19 +16,19 @@
         <form method="post" action="{{ route('charas.create') }}">
             <table class="bar w-full bg-white my-3">
                 <tr>
-                    <th>キャラクター名</th>
-                    <td class="w-10/12"><input type="text" name="name" class="w-4/12"></td>
+                    <th class="w-1/6">キャラクター名</th>
+                    <td><input type="text" name="name" class="w-4/12"></td>
                 </tr>
                 <tr>
-                    <th>説明</th>
-                    <td class="textboard w-10/12">
+                    <th class="w-1/6">説明</th>
+                    <td class="textboard">
                         <div class="dummy_textarea" aria-hidden="true"></div>
                         <textarea type="text" name="explain" class="retextarea w-full h-full"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <th>もっと詳しく</th>
-                    <td class="textboard w-10/12">
+                    <th class="w-1/6">もっと詳しく</th>
+                    <td class="textboard">
                         <div class="dummy_textarea" aria-hidden="true"></div>
                         <textarea type="text" name="descript" class="retextarea w-full h-full"></textarea>
                     </td>

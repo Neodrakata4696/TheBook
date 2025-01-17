@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\FollowUserController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,6 +42,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/charaList/{chara}/delete', [CharacterController::class, 'deleteForm'])->name('charas.delete');
         Route::post('/charaList/{chara}/delete', [CharacterController::class, 'delete']);
     });
+    
+    Route::get('/gallery', [ImageController::class, 'index'])->name('img.gallery');
+    Route::post('/gallery', [ImageController::class, 'upload'])->name('img.upload');
 });
 
 //Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail');

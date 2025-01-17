@@ -16,20 +16,20 @@
         <form method="post" action="{{ route('charas.edit', ['chara' => $chara_id]) }}">
             <table class="bar w-full bg-white my-3">
                 <tr>
-                    <th>キャラクター名</th>
-                    <td class="w-10/12"><input type="text" name="name" value="{{ old('name') ?? $chara_name }}" class="w-4/12"></td>
+                    <th class="w-1/6">キャラクター名</th>
+                    <td><input type="text" name="name" value="{{ old('name') ?? $chara_name }}" class="w-4/12"></td>
                 </tr>
                 <tr>
-                    <th>説明</th>
-                    <td class="textboard w-10/12">
-                        <div class="dummy_textarea" aria-hidden="true"></div>
+                    <th class="w-1/6">説明</th>
+                    <td class="textboard">
+                        <div class="dummy_textarea" aria-hidden="true">{{ old('explain') ?? $chara_explain }}</div>
                         <textarea type="text" name="explain" class="retextarea w-full h-full">{{ old('explain') ?? $chara_explain }}</textarea>
                     </td>
                 </tr>
                 <tr>
-                    <th>もっと詳しく</th>
-                    <td class="textboard w-10/12">
-                        <div class="dummy_textarea" aria-hidden="true"></div>
+                    <th class="w-1/6">もっと詳しく</th>
+                    <td class="textboard">
+                        <div class="dummy_textarea" aria-hidden="true">{{ old('descript') ?? $chara_descript }}</div>
                         <textarea type="text" name="descript" class="retextarea w-full h-full">{{ old('descript') ?? $chara_descript }}</textarea>
                     </td>
                 </tr>

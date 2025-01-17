@@ -33,7 +33,6 @@
                 top: 0;
                 left: 0;
                 display: block;
-                padding: 5px 15px;
                 overflow: hidden;
                 resize: none;
                 box-sizing: border-box;
