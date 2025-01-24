@@ -11,6 +11,7 @@
                 <h3>{{$chara_name}}</h3>
                 <a href="{{ route('users.index', ['user' => $chara->user->id]) }}" class="text-sky-800">{{ $chara_user }}</a>
             </div>
+            <img src="{{ asset($chara_image) }}" class="mx-4 my-8 w-full max-w-44 h-full max-h-44">
             <p class="pt-1">{{$chara_explain}}</p>
             <p class="pt-1">{{$chara_descript}}</p>
         </div>

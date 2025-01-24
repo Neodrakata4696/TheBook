@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', length:24);
+            $table->string('image_path')->nullable($value = true);
             $table->string('explain')->nullable($value = true);
             $table->string('descript')->nullable($value = true);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();

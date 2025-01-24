@@ -13,7 +13,7 @@
             @endforeach
         </ul>
         @endif
-        <form method="post" action="{{ route('charas.create') }}">
+        <form method="post" action="{{ route('charas.create') }}" enctype="multipart/form-data">
             <table class="bar w-full bg-white my-3">
                 <tr>
                     <th class="w-1/6">キャラクター名</th>
@@ -31,6 +31,12 @@
                     <td class="textboard">
                         <div class="dummy_textarea" aria-hidden="true"></div>
                         <textarea type="text" name="descript" class="retextarea w-full h-full"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-1/6">画像</th>
+                    <td>
+                        <input type="file" name="cimage">
                     </td>
                 </tr>
             </table>

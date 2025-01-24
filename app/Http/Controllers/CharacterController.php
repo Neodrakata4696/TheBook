@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Character;
 use App\Models\FollowUser;
+use App\Models\Image;
+use App\Http\Controllers\ImageController;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -35,6 +37,7 @@ class CharacterController extends Controller
             'chara' => $chara,
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
+            'chara_image' => $chara->image_path,
             'chara_explain' => $chara->explain,
             'chara_descript' => $chara->descript,
             'chara_user' => $chara->user->name,
@@ -48,6 +51,16 @@ class CharacterController extends Controller
     public function create(CreateCharacter $request){
         $chara = new Character();
         $chara->name = $request->name;
+        
+        $file_name = $request->file('cimage')->getClientOriginalName();
+        $request->file('cimage')->storeAs(ImageController::getImagePath(), $file_name, 'public');
+        
+        $image = new Image();
+        $image->name = $file_name;
+        $image->path = 'storage/'. ImageController::getImagePath() . '/' . $file_name;
+        $image->save();
+        $chara->image_path = $image->path;
+        
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         Auth::user()->characters()->save($chara);

@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('charas.index')" :active="request()->routeIs('charas.index')">
                         {{ __('キャラクター一覧') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('img.gallery')">
+                        {{ __('ギャラリー') }}
+                    </x-nav-link>
                 </div>
             </div>
 

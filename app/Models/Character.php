@@ -13,4 +13,8 @@ class Character extends Model
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
+    
+    public function image(): BelongsTo{
+        return $this->belongsTo(Image::class);
+    }
 }

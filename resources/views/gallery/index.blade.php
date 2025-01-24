@@ -21,7 +21,7 @@
             <div class="my-4">
                 <div class="flex">
                     @foreach($images as $image)
-                    <img src="{{ asset($image->path) }}" class="mx-4 my-8 max-w-44 max-h-44">
+                    <img src="{{ asset($image->path) }}" class="mx-4 my-8 w-full max-w-44 h-full max-h-44">
                     @endforeach
                 </div>
             </div>
