@@ -11,9 +11,11 @@
                 <h3>{{$chara_name}}</h3>
                 <a href="{{ route('users.index', ['user' => $chara->user->id]) }}" class="text-sky-800">{{ $chara_user }}</a>
             </div>
-            <img src="{{ asset($chara_image) }}" class="mx-4 my-8 w-full max-w-44 h-full max-h-44">
-            <p class="pt-1">{{$chara_explain}}</p>
-            <p class="pt-1">{{$chara_descript}}</p>
+            <div class="flex">
+                <img src="{{ asset($chara_image) }}" class="m-4 w-full max-w-44 h-full max-h-44">
+                <p class="my-4">{{$chara_explain}}</p>
+            </div>
+            <p class="mx-4">{{$chara_descript}}</p>
         </div>
         <div class="toolbox">
             <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">一覧表に戻る</a>

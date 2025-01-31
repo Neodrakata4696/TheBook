@@ -14,8 +14,11 @@
                 @foreach($characters as $character)
                 <div class="m-4 p-4 border border-black">
                     <h3 class="text-2xl border-b-2 border-black">{{$character->name}}</h3>
-                    <p class="pt-1">{{$character->explain}}</p>
-                    <a href="{{route('charas.detail', ['chara' => $character->id])}}" class="text-sky-800">more</a>
+                    <div class="flex">
+                        <img src="{{ asset($character->image_path) }}" class="m-4 w-full max-w-44 h-full max-h-44">
+                        <p class="my-4">{{$character->explain}}</p>
+                    </div>
+                    <a href="{{route('charas.detail', ['chara' => $character->id])}}" class="block text-sky-800 mx-4 text-right">more</a>
                 </div>
                 @endforeach
                 <a href="{{route('charas.index')}}" class="block mx-4 my-4 text-center bg-gray-200 px-3 py-2 shadow-sm sm:rounded-lg">キャラクターリストへ</a>
