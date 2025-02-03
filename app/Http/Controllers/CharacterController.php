@@ -58,7 +58,7 @@ class CharacterController extends Controller
         $image = new Image();
         $image->name = $file_name;
         $image->path = 'storage/'. ImageController::getImagePath() . '/' . $file_name;
-        $image->save();
+        Auth::user()->images()->save($image);
         $chara->image_path = $image->path;
         
         $chara->explain = $request->explain;
