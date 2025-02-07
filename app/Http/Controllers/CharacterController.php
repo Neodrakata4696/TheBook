@@ -45,22 +45,16 @@ class CharacterController extends Controller
     }
     
     public function createForm(){
-        return view('lists.characters.create');
+        $gallery = Image::latest()->get();
+        return view('lists.characters.create', [
+            'images' => $gallery,
+        ]);
     }
     
     public function create(CreateCharacter $request){
         $chara = new Character();
         $chara->name = $request->name;
-        
-        $file_name = $request->file('cimage')->getClientOriginalName();
-        $request->file('cimage')->storeAs(ImageController::getImagePath(), $file_name, 'public');
-        
-        $image = new Image();
-        $image->name = $file_name;
-        $image->path = 'storage/'. ImageController::getImagePath() . '/' . $file_name;
-        Auth::user()->images()->save($image);
-        $chara->image_path = $image->path;
-        
+        $chara->image_path = $request->image;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         Auth::user()->characters()->save($chara);
@@ -71,12 +65,15 @@ class CharacterController extends Controller
     public function editForm(Character $chara){
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
+        $gallery = Image::latest()->get();
         
         return view('lists.characters.edit', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
+            'chara_image' => $chara->image_path,
             'chara_explain' => $chara->explain,
             'chara_descript' => $chara->descript,
+            'images' => $gallery,
         ]);
     }
     
@@ -85,6 +82,7 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         
         $chara->name = $request->name;
+        $chara->image_path = $request->image;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         $chara->save();

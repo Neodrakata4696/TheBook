@@ -14,7 +14,6 @@ $('.follow').on('click', function(event) {
         },
     })
     .done(function(res) {
-        console.log(res);
         follow_user.toggleClass('bg-sky-400 bg-red-400');
         if(follow_user.text() === 'follow'){
             follow_user.text('unfollow');

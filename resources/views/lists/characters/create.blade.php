@@ -36,7 +36,8 @@
                 <tr>
                     <th class="w-1/6">画像</th>
                     <td>
-                        <input type="file" name="cimage">
+                        <input type="text" name="image" id="selectedImage" class="border-none w-full" value="" readonly>
+                        <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')">選択</button>
                     </td>
                 </tr>
             </table>
@@ -44,6 +45,25 @@
             <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">作成</button>
             <button type="button" onclick="history.back()" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</button>
         </form>
+        <x-modal-museum name="image-uploader">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex justify-between">
+                    <h2 class="text-lg font-medium text-gray-900 my-4">画像を選択してください。</h2>
+                    <button type="button" x-on:click="$dispatch('close')">閉じる</button>
+                </div>
+                <input type="text" id="selectedImageFlag" class="border-none w-full" value="" readonly>
+                @include('gallery.view')
+            </div>
+        </x-modal-museum>
     </div>
     <script src="{{ asset('/js/resize.js') }}"></script>
+    <script>
+        var imagePath = document.getElementById('selectedImage');
+        var imageFlag = document.getElementById('selectedImageFlag');
+        $('.uploaded_img').on('click', function(event) {
+            var selected = $(event.currentTarget).val();
+            imagePath.value = selected;
+            imageFlag.value = selected;
+        });
+    </script>
 </x-app-layout>
