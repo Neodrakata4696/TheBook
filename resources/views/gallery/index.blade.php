@@ -6,25 +6,10 @@
             </h2>
         </div>
     </x-slot>
-    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="m-4">
-                    <form method="post" action="{{ route('img.upload') }}" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="image">
-                        <button>アップロード</button>
-                    </form>
-                </div>
-            </div>
-            <div class="my-4">
-                <div class="flex">
-                    @foreach($images as $image)
-                    <img src="{{ asset($image->path) }}" class="mx-4 my-8 w-full max-w-44 h-full max-h-44">
-                    @endforeach
-                </div>
-            </div>
+            @include('gallery.upload')
+            @include('gallery.view')
         </div>
     </div>
 </x-app-layout>
