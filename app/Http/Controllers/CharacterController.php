@@ -54,14 +54,29 @@ class CharacterController extends Controller
     public function create(CreateCharacter $request){
         $chara = new Character();
         $chara->name = $request->name;
-        $chara->image_path = $request->image;
+        $getpath = null;
+        if ($request->file('upload-image') !== null){
+            $original_name = $request->file('upload-image')->getClientOriginalName();
+            $image_name = ImageController::getImageName($request);
+            $request->file('upload-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
+
+            $image = new Image();
+            $image->name = $original_name;
+            $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
+            Auth::user()->images()->save($image);
+            $getpath = $image->path;
+        }
+        else if ($request->image !== null){
+            $getpath = $request->image;
+        }
+        $chara->image_path = $getpath;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         Auth::user()->characters()->save($chara);
         
         return redirect()->route('charas.index');
     }
-        
+    
     public function editForm(Character $chara){
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);

@@ -3,7 +3,7 @@
         <div class="m-4">
             <form method="post" action="{{ route('img.upload') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="file" name="image" accept="image/*">
+                <input type="file" name="upload-image" accept="image/*">
                 <button>アップロード</button>
             </form>
         </div>

@@ -36,8 +36,10 @@
                 <tr>
                     <th class="w-1/6">画像</th>
                     <td>
-                        <input type="text" name="image" id="selectedImage" class="border-none w-full" value="" readonly>
-                        <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')">選択</button>
+                        <input type="file" name="upload-image" accept="image/*">
+                        <p class="text-center">または</p>
+                        <input type="text" name="image" id="selectedImage" class="w-full max-w-[90%] px-0" value="" readonly>
+                        <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 text-white px-2">選択</button>
                     </td>
                 </tr>
             </table>
@@ -51,7 +53,7 @@
                     <h2 class="text-lg font-medium text-gray-900 my-4">画像を選択してください。</h2>
                     <button type="button" x-on:click="$dispatch('close')">閉じる</button>
                 </div>
-                <input type="text" id="selectedImageFlag" class="border-none w-full" value="" readonly>
+                <input type="text" id="selectedImageFlag" class="px-0 w-full" value="" readonly>
                 @include('gallery.view')
             </div>
         </x-modal-museum>

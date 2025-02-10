@@ -15,7 +15,7 @@ class ImageController extends Controller
     }
     
     public static function getImageName(Request $request){
-        $original_name = $request->file('image')->getClientOriginalName();
+        $original_name = $request->file('upload-image')->getClientOriginalName();
         $image_at = Carbon::now();
         return $image_at->format('Y-m-d_H-i-s') . '_' . $original_name;
     }
