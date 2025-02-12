@@ -13,7 +13,7 @@
             @endforeach
         </ul>
         @endif
-        <form method="post" action="{{ route('charas.create') }}" enctype="multipart/form-data">
+        <form name="inputus" method="post" action="{{ route('charas.create') }}" enctype="multipart/form-data">
             <table class="bar w-full bg-white my-3">
                 <tr>
                     <th class="w-1/6">キャラクター名</th>
@@ -36,8 +36,10 @@
                 <tr>
                     <th class="w-1/6">画像</th>
                     <td>
-                        <input type="file" name="upload-image" accept="image/*">
+                        <input type="radio" name="i-radio" value="upload">
+                        <input type="file" name="upload-image" id="uploadedImage" accept="image/*">
                         <p class="text-center">または</p>
+                        <input type="radio" name="i-radio" value="select">
                         <input type="text" name="image" id="selectedImage" class="w-full max-w-[90%] px-0" value="" readonly>
                         <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 text-white px-2">選択</button>
                     </td>
@@ -67,5 +69,29 @@
             imagePath.value = selected;
             imageFlag.value = selected;
         });
+        
+        const uploadedImage = document.getElementById('uploadedImage');
+        const selectedImage = document.getElementById('selectedImage');
+        uploadedImage.disabled = true;
+        selectedImage.disabled = true;
+        
+        var radios = document.forms["inputus"].elements["i-radio"];
+        console.log(radios);
+        for (var i = 0; i < radios.length; i++) {
+            radios[i].onclick = radioClicked;
+        }
+        
+        function radioClicked(){
+            switch (this.value){
+                case "upload":
+                    uploadedImage.disabled = false;
+                    selectedImage.disabled = true;
+                    break;
+                case "select":
+                    uploadedImage.disabled = true;
+                    selectedImage.disabled = false;
+                    break;
+            }
+        }
     </script>
 </x-app-layout>
