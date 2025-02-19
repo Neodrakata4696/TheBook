@@ -54,22 +54,22 @@ class CharacterController extends Controller
     public function create(CreateCharacter $request){
         $chara = new Character();
         $chara->name = $request->name;
-        $getpath = null;
-        if ($request->file('upload-image') !== null){
-            $original_name = $request->file('upload-image')->getClientOriginalName();
+        $image_path = null;
+        if ($request->file('uploaded-image') !== null){
+            $original_name = $request->file('uploaded-image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
-            $request->file('upload-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
+            $request->file('uploaded-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
 
             $image = new Image();
             $image->name = $original_name;
             $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
             Auth::user()->images()->save($image);
-            $getpath = $image->path;
+            $image_path = $image->path;
         }
-        else if ($request->image !== null){
-            $getpath = $request->image;
+        else if ($request->selected_image !== null){
+            $image_path = $request->selected_image;
         }
-        $chara->image_path = $getpath;
+        $chara->image_path = $image_path;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         Auth::user()->characters()->save($chara);
@@ -97,22 +97,22 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         
         $chara->name = $request->name;
-        $getpath = null;
-        if ($request->file('upload-image') !== null){
-            $original_name = $request->file('upload-image')->getClientOriginalName();
+        $image_path = null;
+        if ($request->file('uploaded-image') !== null){
+            $original_name = $request->file('uploaded-image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
-            $request->file('upload-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
+            $request->file('uploaded-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
 
             $image = new Image();
             $image->name = $original_name;
             $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
             Auth::user()->images()->save($image);
-            $getpath = $image->path;
+            $image_path = $image->path;
         }
-        else if ($request->image !== null){
-            $getpath = $request->image;
+        else if ($request->selected_image !== null){
+            $image_path = $request->selected_image;
         }
-        $chara->image_path = $getpath;
+        $chara->image_path = $image_path;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         $chara->save();
@@ -127,6 +127,7 @@ class CharacterController extends Controller
         return view('lists.characters.delete', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
+            'chara_image' => $chara->image_path,
             'chara_explain' => $chara->explain,
             'chara_descript' => $chara->descript,
         ]);
