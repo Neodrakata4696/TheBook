@@ -28,9 +28,9 @@ class ImageController extends Controller
     }
     
     public function upload(Request $request){
-        $original_name = $request->file('image')->getClientOriginalName();
+        $original_name = $request->file('upload-image')->getClientOriginalName();
         $image_name = $this->getImageName($request);
-        $request->file('image')->storeAs($this->getImagePath(), $image_name, 'public');
+        $request->file('upload-image')->storeAs($this->getImagePath(), $image_name, 'public');
         
         $image = new Image();
         $image->name = $original_name;

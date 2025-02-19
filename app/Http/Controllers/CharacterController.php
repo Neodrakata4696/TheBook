@@ -97,7 +97,22 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         
         $chara->name = $request->name;
-        $chara->image_path = $request->image;
+        $getpath = null;
+        if ($request->file('upload-image') !== null){
+            $original_name = $request->file('upload-image')->getClientOriginalName();
+            $image_name = ImageController::getImageName($request);
+            $request->file('upload-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
+
+            $image = new Image();
+            $image->name = $original_name;
+            $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
+            Auth::user()->images()->save($image);
+            $getpath = $image->path;
+        }
+        else if ($request->image !== null){
+            $getpath = $request->image;
+        }
+        $chara->image_path = $getpath;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
         $chara->save();
