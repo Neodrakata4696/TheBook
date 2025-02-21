@@ -38,16 +38,16 @@
                 <th class="border-l border-black w-2/12">コマンド</th>
                 @endauth
             </tr>
-            @foreach($characters as $character)
+            @foreach($characters as $chara)
             <tr class="border-t border-black">
-                <td class="text-sky-800"><a href="{{ route('charas.detail', ['chara' => $character->id]) }}">{{ $character->name }}</a></td>
-                <td class="border-l border-black">{{ Str::limit($character->explain, 95) }}</td>
+                <td class="text-sky-800"><a href="{{ route('charas.detail', ['chara' => $chara->id]) }}">{{ $chara->name }}</a></td>
+                <td class="border-l border-black">{{ Str::limit($chara->explain, 95) }}</td>
                 <td class="border-l border-black text-center">
-                    <a href="{{ route('charas.detail', ['chara' => $character->id]) }}">詳細</a>
+                    <a href="{{ route('charas.detail', ['chara' => $chara->id]) }}">詳細</a>
                     @auth
-                    @if($character->user->id === Auth::user()->id)
-                    <a href="{{ route('charas.edit', ['chara' => $character->id]) }}">編集</a>
-                    <a href="{{ route('charas.delete', ['chara' => $character->id]) }}">削除</a>
+                    @if($chara->user->id === Auth::user()->id)
+                    <a href="{{ route('charas.edit', ['chara' => $chara->id]) }}">編集</a>
+                    <a href="{{ route('charas.delete', ['chara' => $chara->id]) }}">削除</a>
                     @endif
                     @endauth
                 </td>

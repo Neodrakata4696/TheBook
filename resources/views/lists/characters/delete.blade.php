@@ -14,6 +14,10 @@
                     <td class="border-l border-black">{{ $chara_name }}</td>
                 </tr>
                 <tr class="border-t border-black">
+                    <th class="w-1/12 bg-yellow-300">画像</th>
+                    <td class="border-l border-black"><img src="{{ asset($chara_image)}}" class="m-2 w-full max-w-44 h-full max-h-44"></td>
+                </tr>
+                <tr class="border-t border-black">
                     <th class="w-1/12 bg-yellow-300">説明</th>
                     <td class="border-l border-black">{{ $chara_explain }}</td>
                 </tr>

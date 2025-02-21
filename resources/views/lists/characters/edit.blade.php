@@ -37,11 +37,11 @@
                     <th class="w-1/6">画像</th>
                     <td>
                         <input type="radio" name="i-radio" value="upload">
-                        <input type="file" name="upload-image" id="uploadedImage" accept="image/*">
+                        <input type="file" name="uploaded-image" id="uploaded_image" accept="image/*">
                         <p class="text-center">または</p>
-                        <input type="radio" name="i-radio" value="select">
-                        <input type="text" name="image" id="selectedImage" class="w-full max-w-[90%] px-0" value="" readonly>
-                        <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 text-white px-2">選択</button>
+                        <input type="radio" name="i-radio" value="select" {{(old('$selected_image') != $chara_image) ? 'checked' : ''}}>
+                        <input type="text" name="selected_image" id="selected_image" class="w-full max-w-[90%] px-0" value="{{ old('selected_image') ?? $chara_image }}" readonly>
+                        <button type="button" id="selecter_open" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 disabled:bg-gray-400 text-white px-2">選択</button>
                     </td>
                 </tr>
             </table>
@@ -55,43 +55,11 @@
                     <h2 class="text-lg font-medium text-gray-900 my-4">画像を選択してください。</h2>
                     <button type="button" x-on:click="$dispatch('close')">閉じる</button>
                 </div>
-                <input type="text" id="selectedImageFlag" class="border-none w-full" value="" readonly>
+                <input type="text" name="selected-image-flag" id="selected_image_flag" class="border-none w-full" value="{{ old('selected-image-flag') ?? $chara_image }}" readonly>
                 @include('gallery.view')
             </div>
         </x-modal-museum>
     </div>
     <script src="{{ asset('/js/resize.js') }}"></script>
-    <script>
-        var imagePath = document.getElementById('selectedImage');
-        var imageFlag = document.getElementById('selectedImageFlag');
-        $('.uploaded_img').on('click', function(event) {
-            var selected = $(event.currentTarget).val();
-            imagePath.value = selected;
-            imageFlag.value = selected;
-        });
-        
-        const uploadedImage = document.getElementById('uploadedImage');
-        const selectedImage = document.getElementById('selectedImage');
-        uploadedImage.disabled = true;
-        selectedImage.disabled = true;
-        
-        var radios = document.forms["inputus"].elements["i-radio"];
-        console.log(radios);
-        for (var i = 0; i < radios.length; i++) {
-            radios[i].onclick = radioClicked;
-        }
-        
-        function radioClicked(){
-            switch (this.value){
-                case "upload":
-                    uploadedImage.disabled = false;
-                    selectedImage.disabled = true;
-                    break;
-                case "select":
-                    uploadedImage.disabled = true;
-                    selectedImage.disabled = false;
-                    break;
-            }
-        }
-    </script>
+    <script src="{{ asset('/js/image_paste.js') }}"></script>
 </x-app-layout>
