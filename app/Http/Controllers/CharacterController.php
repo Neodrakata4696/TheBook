@@ -12,9 +12,12 @@ use App\Http\Controllers\ImageController;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CharacterController extends Controller
 {
+    private $chara_input = ["name", "explain", "descript"];
+    
     public function index(Request $request){
         $list = Character::query();
         
@@ -52,28 +55,76 @@ class CharacterController extends Controller
     }
     
     public function create(CreateCharacter $request){
-        $chara = new Character();
+        $chara_session = $request->only($this->chara_input);
+        
+        /*$chara = new Character();
         $chara->name = $request->name;
-        $image_path = null;
-        if ($request->file('uploaded-image') !== null){
-            $original_name = $request->file('uploaded-image')->getClientOriginalName();
+        $getpath = null;
+        if ($request->file('uploaded_image') !== null){
+            $original_name = $request->file('uploaded_image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
-            $request->file('uploaded-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
+            $request->file('uploaded_image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
 
             $image = new Image();
             $image->name = $original_name;
             $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
             Auth::user()->images()->save($image);
-            $image_path = $image->path;
+            $getpath = $image->path;
         }
-        else if ($request->selected_image !== null){
-            $image_path = $request->selected_image;
+        else if ($request->image !== null){
+            $getpath = $request->image;
         }
-        $chara->image_path = $image_path;
+        $chara->image_path = $getpath;
         $chara->explain = $request->explain;
         $chara->descript = $request->descript;
-        Auth::user()->characters()->save($chara);
+        Auth::user()->characters()->save($chara);*/
         
+        if ($request->file('uploaded_image') !== null){
+            $original_name = $request->file('uploaded_image')->getClientOriginalName();
+            $image_name = ImageController::getImageName($request);
+            $request->file('uploaded_image')->storeAs('/img_store', $image_name, 'public');
+            $image = 'storage/img_store/'. $image_name;
+            $request->session()->put("image_path_session", $image);
+            $request->session()->put("image_original_session", $original_name);
+        }
+        else if ($request->selected_image !== null){
+            $getpath = $request->selected_image;
+            $request->session()->put("image_path_session", $getpath);
+        }
+        $request->session()->put("chara_session", $chara_session);
+        
+        return redirect()->route('charas.createConfirm');
+    }
+    
+    public function createConfirm(Request $request){
+        $chara_session = $request->session()->get("chara_session");
+        $image_path_session = $request->session()->get("image_path_session");
+        return view('lists.characters.createConfirm', [
+            "chara" => $chara_session,
+            "image_path" => $image_path_session,
+        ]);
+    }
+    
+    public function createSend(Request $request){
+        $chara_session = $request->session()->get("chara_session");
+        $image_path_session = $request->session()->get("image_path_session");
+        $original_name = $request->session()->get("image_original_session");
+        
+        $chara = new Character();
+        
+        if ($image_path_session !== null){
+            $image = new Image();
+            $image->name = $original_name;
+            $image->path = $image_path_session;
+            Auth::user()->images()->save($image);
+            $chara->image_path = $image->path;
+        }
+        
+        $chara->name = $chara_session['name'];
+        $chara->explain = $chara_session['explain'];
+        $chara->descript = $chara_session['descript'];
+        Auth::user()->characters()->save($chara);
+        $request->session()->forget("chara_session");
         return redirect()->route('charas.index');
     }
     

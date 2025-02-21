@@ -16,7 +16,7 @@
                     <h3 class="text-2xl border-b-2 border-black">{{$character->name}}</h3>
                     <div class="flex">
                         @if($character->image_path !== null)
-                        <img src="{{ asset($character->image_path) }}" class="m-4 ml-0 w-full max-w-44 h-full max-h-44">
+                        <img src="{{ asset($character->image_path) }}" class="m-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
                         @endif
                         <p class="my-4">{{$character->explain}}</p>
                     </div>
