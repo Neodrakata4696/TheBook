@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/charaList/create', [CharacterController::class, 'createForm'])->name('charas.create');
     Route::post('/charaList/create', [CharacterController::class, 'create']);
+    Route::get('/charaList/create/confirm', [CharacterController::class, 'createConfirm'])->name('charas.createConfirm');
+    Route::post('/charaList/create/confirm', [CharacterController::class, 'createSend']);
     
     Route::get('/users/{user}/followList', [FollowUserController::class, 'followIndex'])->name('users.followIndex');
     Route::get('/users/{user}/followerList', [FollowUserController::class, 'followerIndex'])->name('users.followerIndex');
@@ -38,6 +40,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'can:view,chara'], function() {
         Route::get('/charaList/{chara}/edit', [CharacterController::class, 'editForm'])->name('charas.edit');
         Route::post('/charaList/{chara}/edit', [CharacterController::class, 'edit']);
+        Route::get('/charaList/{chara}/edit/confirm', [CharacterController::class, 'editConfirm'])->name('charas.editConfirm');
+        Route::post('/charaList/{chara}/edit/confirm', [CharacterController::class, 'editSend']);
         
         Route::get('/charaList/{chara}/delete', [CharacterController::class, 'deleteForm'])->name('charas.delete');
         Route::post('/charaList/{chara}/delete', [CharacterController::class, 'delete']);

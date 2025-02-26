@@ -37,7 +37,7 @@
                     <th class="w-1/6">画像</th>
                     <td>
                         <input type="radio" name="i-radio" value="upload">
-                        <input type="file" name="uploaded-image" id="uploaded_image" accept="image/*">
+                        <input type="file" name="uploaded_image" id="uploaded_image" accept="image/*">
                         <p class="text-center">または</p>
                         <input type="radio" name="i-radio" value="select">
                         <input type="text" name="selected_image" id="selected_image" class="w-full max-w-[90%] px-0" value="" readonly>
