@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($chara['name']. ' の作成確認') }}
+            {{ __($chara['name']. ' の編集確認') }}
         </h2>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <form method="post" action="{{ route('charas.createConfirm') }}">
+        <form method="post" action="{{ route('charas.editConfirm', [$chara_id]) }}">
             <table class="bar my-3 bg-white w-full">
                 <tr>
                     <th class="w-1/12 bg-yellow-300">キャラクター名</th>
@@ -30,7 +30,7 @@
                 </tr>
             </table>
             @csrf
-            <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">作成</button>
+            <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">更新</button>
             <button type="button" onclick="history.back();" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">戻る</button>
         </form>
     </div>

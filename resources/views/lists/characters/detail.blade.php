@@ -11,15 +11,15 @@
                 <h3>{{$chara_name}}</h3>
                 <a href="{{ route('users.index', ['user' => $chara->user->id]) }}" class="text-sky-800">{{ $chara_user }}</a>
             </div>
-            <div class="flex">
+            <div class="flex my-4">
                 @if($chara_image !== null)
-                <img src="{{ asset($chara_image) }}" class="m-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
+                <img src="{{ asset($chara_image) }}" class="mx-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
                 @endif
-                <p class="my-4">{{$chara_explain}}</p>
+                <p>{{$chara_explain}}</p>
             </div>
-            <p class="mx-4">{{$chara_descript}}</p>
+            <p>{{$chara_descript}}</p>
         </div>
-        <div class="toolbox">
+        <div class="toolbox mx-4">
             <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">一覧表に戻る</a>
             @auth
             <a href="{{ route('charas.create') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>

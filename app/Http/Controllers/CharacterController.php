@@ -55,36 +55,16 @@ class CharacterController extends Controller
     }
     
     public function create(CreateCharacter $request){
+        $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
         $chara_session = $request->only($this->chara_input);
-        
-        /*$chara = new Character();
-        $chara->name = $request->name;
-        $getpath = null;
-        if ($request->file('uploaded_image') !== null){
-            $original_name = $request->file('uploaded_image')->getClientOriginalName();
-            $image_name = ImageController::getImageName($request);
-            $request->file('uploaded_image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
-
-            $image = new Image();
-            $image->name = $original_name;
-            $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
-            Auth::user()->images()->save($image);
-            $getpath = $image->path;
-        }
-        else if ($request->image !== null){
-            $getpath = $request->image;
-        }
-        $chara->image_path = $getpath;
-        $chara->explain = $request->explain;
-        $chara->descript = $request->descript;
-        Auth::user()->characters()->save($chara);*/
         
         if ($request->file('uploaded_image') !== null){
             $original_name = $request->file('uploaded_image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
             $request->file('uploaded_image')->storeAs('/img_store', $image_name, 'public');
             $image = 'storage/img_store/'. $image_name;
-            $request->session()->put("image_path_session", $image);
+            $request->session()->put("image_session", $image);
+            $request->session()->put("image_name_session", $image_name);
             $request->session()->put("image_original_session", $original_name);
         }
         else if ($request->selected_image !== null){
@@ -98,26 +78,46 @@ class CharacterController extends Controller
     
     public function createConfirm(Request $request){
         $chara_session = $request->session()->get("chara_session");
-        $image_path_session = $request->session()->get("image_path_session");
+        if ($request->session()->get("image_session") !== null){
+            $image_session = $request->session()->get("image_session");
+        }
+        else if ($request->session()->get("image_path_session") !== null){
+            $image_session = $request->session()->get("image_path_session");
+        }
+        else{
+            $image_session = null;
+        }
+        
         return view('lists.characters.createConfirm', [
             "chara" => $chara_session,
-            "image_path" => $image_path_session,
+            "image_path" => $image_session,
         ]);
     }
     
     public function createSend(Request $request){
         $chara_session = $request->session()->get("chara_session");
+        $image_session = $request->session()->get("image_session");
         $image_path_session = $request->session()->get("image_path_session");
+        $image_name = $request->session()->get("image_name_session");
         $original_name = $request->session()->get("image_original_session");
         
         $chara = new Character();
         
-        if ($image_path_session !== null){
+        if ($image_session !== null){
             $image = new Image();
+            $new_image_path = ImageController::getImagePath() . '/' . $image_name;
+            Storage::disk('public')->move('img_store/' . $image_name, $new_image_path);
             $image->name = $original_name;
-            $image->path = $image_path_session;
+            $image->path = 'storage/' . $new_image_path;
             Auth::user()->images()->save($image);
             $chara->image_path = $image->path;
+            $request->session()->forget("image_session");
+            $request->session()->forget("image_name_session");
+            $request->session()->forget("image_original_session");
+        }
+        else if ($image_path_session !== null){
+            $chara->image_path = $image_path_session;
+            $request->session()->forget("image_path_session");
         }
         
         $chara->name = $chara_session['name'];
@@ -147,28 +147,86 @@ class CharacterController extends Controller
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
         
-        $chara->name = $request->name;
-        $image_path = null;
-        if ($request->file('uploaded-image') !== null){
-            $original_name = $request->file('uploaded-image')->getClientOriginalName();
+        $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
+        $chara_session = $request->only($this->chara_input);
+        
+        if ($request->file('uploaded_image') !== null){
+            $original_name = $request->file('uploaded_image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
-            $request->file('uploaded-image')->storeAs(ImageController::getImagePath(), $image_name, 'public');
-
-            $image = new Image();
-            $image->name = $original_name;
-            $image->path = 'storage/'. ImageController::getImagePath() . '/' . $image_name;
-            Auth::user()->images()->save($image);
-            $image_path = $image->path;
+            $request->file('uploaded_image')->storeAs('/img_store', $image_name, 'public');
+            $image = 'storage/img_store/'. $image_name;
+            $request->session()->put("image_session", $image);
+            $request->session()->put("image_name_session", $image_name);
+            $request->session()->put("image_original_session", $original_name);
         }
         else if ($request->selected_image !== null){
-            $image_path = $request->selected_image;
+            $getpath = $request->selected_image;
+            $request->session()->put("image_path_session", $getpath);
         }
-        $chara->image_path = $image_path;
-        $chara->explain = $request->explain;
-        $chara->descript = $request->descript;
-        $chara->save();
+        $request->session()->put("chara_session", $chara_session);
         
-        return redirect()->route('charas.detail', ['chara' => $chara]);
+        return redirect()->route('charas.editConfirm', [
+            "chara" => $chara,
+        ]);
+    }
+    
+    public function editConfirm(Character $chara, Request $request){
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
+        
+        $chara_session = $request->session()->get("chara_session");
+        if ($request->session()->get("image_session") !== null){
+            $image_session = $request->session()->get("image_session");
+        }
+        else if ($request->session()->get("image_path_session") !== null){
+            $image_session = $request->session()->get("image_path_session");
+        }
+        else{
+            $image_session = null;
+        }
+        
+        return view('lists.characters.editConfirm', [
+            "chara_id" => $chara,
+            "chara" => $chara_session,
+            "image_path" => $image_session,
+        ]);
+    }
+    
+    public function editSend(Character $chara, Request $request){
+        $user = Auth::user();
+        $chara = $user->characters()->findOrFail($chara->id);
+        
+        $chara_session = $request->session()->get("chara_session");
+        $image_session = $request->session()->get("image_session");
+        $image_path_session = $request->session()->get("image_path_session");
+        $image_name = $request->session()->get("image_name_session");
+        $original_name = $request->session()->get("image_original_session");
+        
+        if ($image_session !== null){
+            $image = new Image();
+            $new_image_path = ImageController::getImagePath() . '/' . $image_name;
+            Storage::disk('public')->move('img_store/' . $image_name, $new_image_path);
+            $image->name = $original_name;
+            $image->path = 'storage/' . $new_image_path;
+            Auth::user()->images()->save($image);
+            $chara->image_path = $image->path;
+            $request->session()->forget("image_session");
+            $request->session()->forget("image_name_session");
+            $request->session()->forget("image_original_session");
+        }
+        else if ($image_path_session !== null){
+            $chara->image_path = $image_path_session;
+            $request->session()->forget("image_path_session");
+        }
+        
+        $chara->name = $chara_session['name'];
+        $chara->explain = $chara_session['explain'];
+        $chara->descript = $chara_session['descript'];
+        $chara->save();
+        $request->session()->forget("chara_session");
+        return redirect()->route('charas.detail', [
+            "chara" => $chara,
+        ]);
     }
     
     public function deleteForm(Character $chara){
