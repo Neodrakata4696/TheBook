@@ -37,9 +37,9 @@
                     <th class="w-1/6">画像</th>
                     <td>
                         <input type="radio" name="i-radio" value="upload">
-                        <input type="file" name="uploaded_image" id="uploaded_image" accept="image/*">
+                        <input type="file" name="uploaded_image" id="uploaded_image" accept="image/png, image/jpeg">
                         <p class="text-center">または</p>
-                        <input type="radio" name="i-radio" value="select" {{(old('$selected_image') != $chara_image) ? 'checked' : ''}}>
+                        <input type="radio" name="i-radio" value="select" {{ old('$selected_image') == $chara_image ? '' : 'checked' }}>
                         <input type="text" name="selected_image" id="selected_image" class="w-full max-w-[90%] px-0" value="{{ old('selected_image') ?? $chara_image }}" readonly>
                         <button type="button" id="selecter_open" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 disabled:bg-gray-400 text-white px-2">選択</button>
                     </td>

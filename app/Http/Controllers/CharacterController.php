@@ -58,6 +58,10 @@ class CharacterController extends Controller
         $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
         $chara_session = $request->only($this->chara_input);
         
+        $validated = $request->validate([
+            'uploaded_image' => 'mimetypes:image/png, image/jpeg',
+        ]);
+        
         if ($request->file('uploaded_image') !== null){
             $original_name = $request->file('uploaded_image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
@@ -73,10 +77,15 @@ class CharacterController extends Controller
         }
         $request->session()->put("chara_session", $chara_session);
         
+        $request->session()->put('token', csrf_token());
         return redirect()->route('charas.createConfirm');
     }
     
     public function createConfirm(Request $request){
+        if (!$request->session()->exists('token')){
+            return redirect()->route('charas.create');
+        }
+        
         $chara_session = $request->session()->get("chara_session");
         if ($request->session()->get("image_session") !== null){
             $image_session = $request->session()->get("image_session");
@@ -124,7 +133,7 @@ class CharacterController extends Controller
         $chara->explain = $chara_session['explain'];
         $chara->descript = $chara_session['descript'];
         Auth::user()->characters()->save($chara);
-        $request->session()->forget("chara_session");
+        $request->session()->forget(["chara_session", "token"]);
         return redirect()->route('charas.index');
     }
     
@@ -150,6 +159,10 @@ class CharacterController extends Controller
         $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
         $chara_session = $request->only($this->chara_input);
         
+        $validated = $request->validate([
+            'uploaded_image' => 'mimetypes:image/png, image/jpeg',
+        ]);
+        
         if ($request->file('uploaded_image') !== null){
             $original_name = $request->file('uploaded_image')->getClientOriginalName();
             $image_name = ImageController::getImageName($request);
@@ -165,6 +178,8 @@ class CharacterController extends Controller
         }
         $request->session()->put("chara_session", $chara_session);
         
+        $request->session()->put('token', csrf_token());
+        $request->session()->put('chara_id_session', $chara->id);
         return redirect()->route('charas.editConfirm', [
             "chara" => $chara,
         ]);
@@ -173,6 +188,16 @@ class CharacterController extends Controller
     public function editConfirm(Character $chara, Request $request){
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
+        if (!$request->session()->exists('token')){
+            return redirect()->route('charas.edit', [
+                "chara" => $chara,
+            ]);
+        }
+        else if ($request->session()->get('chara_id_session') !== $chara->id){
+            return redirect()->route('charas.edit', [
+                "chara" => $chara,
+            ]);
+        }
         
         $chara_session = $request->session()->get("chara_session");
         if ($request->session()->get("image_session") !== null){
@@ -183,6 +208,10 @@ class CharacterController extends Controller
         }
         else{
             $image_session = null;
+        }
+        
+        if (!$chara_session){
+            return redirect()->route('charas.edit', ["chara" => $chara]);
         }
         
         return view('lists.characters.editConfirm', [
@@ -218,15 +247,18 @@ class CharacterController extends Controller
             $chara->image_path = $image_path_session;
             $request->session()->forget("image_path_session");
         }
+        else{
+            $chara->image_path = null;
+        }
         
         $chara->name = $chara_session['name'];
         $chara->explain = $chara_session['explain'];
         $chara->descript = $chara_session['descript'];
         $chara->save();
-        $request->session()->forget("chara_session");
+        $request->session()->forget(["chara_session", "token", "chara_id_session"]);
         return redirect()->route('charas.detail', [
             "chara" => $chara,
-        ]);
+        ])->with('message', '登録完了しました');
     }
     
     public function deleteForm(Character $chara){
