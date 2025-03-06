@@ -56,10 +56,12 @@
                     <button type="button" x-on:click="$dispatch('close')">閉じる</button>
                 </div>
                 <input type="text" id="selected_image_flag" class="border-none w-full" value="" readonly>
-                @include('gallery.view')
+                <div id="gallery">
+                    @include('gallery.view')
+                </div>
             </div>
         </x-modal-museum>
     </div>
     <script src="{{ asset('/js/resize.js') }}"></script>
-    <script src="{{ asset('/js/image_paste.js') }}"></script>
+    <script src="{{ asset('/js/image_select.js') }}"></script>
 </x-app-layout>

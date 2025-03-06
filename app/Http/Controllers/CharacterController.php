@@ -48,8 +48,8 @@ class CharacterController extends Controller
     }
     
     public function createForm(){
-        $gallery = Image::latest()->get();
-        return view('lists.characters.create', [
+        $gallery = Image::orderBy('id', 'DESC')->paginate(15);
+        return response()->view('lists.characters.create', [
             'images' => $gallery,
         ]);
     }
@@ -134,15 +134,17 @@ class CharacterController extends Controller
         $chara->descript = $chara_session['descript'];
         Auth::user()->characters()->save($chara);
         $request->session()->forget(["chara_session", "token"]);
-        return redirect()->route('charas.index');
+        return redirect()->route('charas.detail', [
+            "chara" => $chara->id,
+        ])->with('message', '作成完了しました');
     }
     
     public function editForm(Character $chara){
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
-        $gallery = Image::latest()->get();
+        $gallery = Image::orderBy('id', 'DESC')->paginate(15);
         
-        return view('lists.characters.edit', [
+        return response()->view('lists.characters.edit', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_image' => $chara->image_path,
@@ -258,7 +260,7 @@ class CharacterController extends Controller
         $request->session()->forget(["chara_session", "token", "chara_id_session"]);
         return redirect()->route('charas.detail', [
             "chara" => $chara,
-        ])->with('message', '登録完了しました');
+        ])->with('message', '更新完了しました');
     }
     
     public function deleteForm(Character $chara){

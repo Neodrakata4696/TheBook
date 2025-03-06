@@ -21,8 +21,8 @@ class ImageController extends Controller
     }
     
     public function index(){
-        $gallery = Image::latest()->get();
-        return view('gallery.index', [
+        $gallery = Image::orderBy('id', 'DESC')->paginate(30);
+        return response()->view('gallery.index', [
             'images' => $gallery,
         ]);
     }
