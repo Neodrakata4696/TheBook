@@ -37,5 +37,5 @@
         </div>
         @endif
     </div>
-    @include('scripts.followSystem')
+    <script src="{{ asset('/js/followSystem.js') }}"></script>
 </x-app-layout>
