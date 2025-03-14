@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
 use App\Models\User;
+use App\Http\Requests\ImageRequest;
 use Carbon\Carbon;
 
 class ImageController extends Controller
@@ -27,7 +28,7 @@ class ImageController extends Controller
         ]);
     }
     
-    public function upload(Request $request){
+    public function upload(ImageRequest $request){
         $image_name = $this->getImageName($request);
         $request->file('uploaded_image')->storeAs($this->getImagePath(), $image_name, 'public');
         
