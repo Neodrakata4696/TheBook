@@ -8,7 +8,7 @@
                 </button>
                 @endforeach
             </div>
-            {!! $images->render() !!}
+            {!! $images->render('vendor.pagination.tailwind_pagination') !!}
         </div>
         <script src="{{ asset('js/pagination.js') }}"></script>
         <script src="{{ asset('js/image_paste.js') }}"></script>
