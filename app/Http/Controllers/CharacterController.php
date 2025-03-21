@@ -49,7 +49,7 @@ class CharacterController extends Controller
     
     public function createForm(){
         $gallery = Image::orderBy('id', 'DESC')->paginate(15);
-        return response()->view('lists.characters.create', [
+        return view('lists.characters.create', [
             'images' => $gallery,
         ]);
     }
@@ -144,7 +144,7 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         $gallery = Image::orderBy('id', 'DESC')->paginate(15);
         
-        return response()->view('lists.characters.edit', [
+        return view('lists.characters.edit', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_image' => $chara->image_path,
