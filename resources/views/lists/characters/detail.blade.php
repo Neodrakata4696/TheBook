@@ -7,7 +7,7 @@
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <p class="m-4">{{ session('message') }}</p>
-        <div class="bg-white m-4 p-4 border border-black">
+        <div class="bg-white my-4 p-4 border border-black">
             <div class="flex text-2xl border-b-2 border-black justify-between">
                 <h3>{{$chara_name}}</h3>
                 <a href="{{ route('users.index', ['user' => $chara->user->id]) }}" class="text-sky-800">{{ $chara_user }}</a>
