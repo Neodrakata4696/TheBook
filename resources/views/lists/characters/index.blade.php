@@ -33,7 +33,7 @@
             </tr>
             @endforeach
         </table>
-        {!! $characters->render() !!}
+        {{ $characters->appends(Request::only('keyword'))->render() }}
         @else
         <div class="pt-8">
             <div class="text-center">キャラクターは誰もいません</div>
