@@ -11,16 +11,6 @@ use Illuminate\Support\Str;
 
 class FollowUserController extends Controller
 {
-    public function userIndex(User $user, Request $request){
-        $user->findOrFail($user->id);
-        $characters = $user->characters()->latest()->paginate(15);
-        
-        return view('lists.characters.prindex', [
-            'characters' => $characters,
-            'user' => $user,
-        ]);
-    }
-    
     public function followIndex(User $user) {
         $user->findOrFail($user->id);
         $followeds = FollowUser::where('following_user_id', $user->id)->latest()->paginate(15);

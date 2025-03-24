@@ -12,6 +12,7 @@
                 @endauth
                 <x-nav-link :href="route('users.followIndex', ['user' => $user->id])" :active="request()->routeIs('users.followIndex')">フォロー</x-nav-link>
                 <x-nav-link :href="route('users.followerIndex', ['user' => $user->id])" :active="request()->routeIs('users.followerIndex')">フォロワー</x-nav-link>
+                @auth
                 @if($user->id !== Auth::user()->id)
                 <form>
                     @csrf
@@ -22,6 +23,7 @@
                     @endif
                 </form>
                 @endif
+                @endauth
             </div>
         </div>
     </x-slot>
@@ -32,9 +34,7 @@
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>
                 <th class="border-l border-black">説明</th>
-                @auth
                 <th class="border-l border-black w-2/12">コマンド</th>
-                @endauth
             </tr>
             @foreach($characters as $chara)
             <tr class="border-t border-black">

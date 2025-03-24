@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Character;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\FollowUserController;
 use App\Http\Controllers\ImageController;
@@ -21,16 +22,17 @@ Route::middleware('auth')->group(function () {
 
 //以下、TheBookのページ
 
-Route::get('/charaList', [CharacterController::class, 'index'])->name('charas.index');
-Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail')->where('chara', '[0-9]+');
+Route::get('/charas', [CharacterController::class, 'index'])->name('charas.index');
+Route::get('/charas/{chara}', [CharacterController::class, 'detail'])->name('charas.detail')->where('chara', '[0-9]+');
+
+Route::get('/users/{user}', [UserController::class, 'userIndex'])->name('users.index');
+Route::get('/gallery', [ImageController::class, 'index'])->name('img.gallery');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/users/{user}', [FollowUserController::class, 'userIndex'])->name('users.index');
-    
-    Route::get('/charaList/create', [CharacterController::class, 'createForm'])->name('charas.create');
-    Route::post('/charaList/create', [CharacterController::class, 'create']);
-    Route::get('/charaList/create/confirm', [CharacterController::class, 'createConfirm'])->name('charas.createConfirm');
-    Route::post('/charaList/create/confirm', [CharacterController::class, 'createSend']);
+    Route::get('/charas/create', [CharacterController::class, 'createForm'])->name('charas.create');
+    Route::post('/charas/create', [CharacterController::class, 'create']);
+    Route::get('/charas/create/confirm', [CharacterController::class, 'createConfirm'])->name('charas.createConfirm');
+    Route::post('/charas/create/confirm', [CharacterController::class, 'createSend']);
     
     Route::get('/users/{user}/followList', [FollowUserController::class, 'followIndex'])->name('users.followIndex');
     Route::get('/users/{user}/followerList', [FollowUserController::class, 'followerIndex'])->name('users.followerIndex');
@@ -38,17 +40,23 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/users/{user}/follow', [FollowUserController::class, 'follow'])->name('users.follow');
     
     Route::group(['middleware' => 'can:view,chara'], function() {
-        Route::get('/charaList/{chara}/edit', [CharacterController::class, 'editForm'])->name('charas.edit');
-        Route::post('/charaList/{chara}/edit', [CharacterController::class, 'edit']);
-        Route::get('/charaList/{chara}/edit/confirm', [CharacterController::class, 'editConfirm'])->name('charas.editConfirm');
-        Route::post('/charaList/{chara}/edit/confirm', [CharacterController::class, 'editSend']);
+        Route::get('/charas/{chara}/edit', [CharacterController::class, 'editForm'])->name('charas.edit');
+        Route::post('/charas/{chara}/edit', [CharacterController::class, 'edit']);
+        Route::get('/charas/{chara}/edit/confirm', [CharacterController::class, 'editConfirm'])->name('charas.editConfirm');
+        Route::post('/charas/{chara}/edit/confirm', [CharacterController::class, 'editSend']);
         
-        Route::get('/charaList/{chara}/delete', [CharacterController::class, 'deleteForm'])->name('charas.delete');
-        Route::post('/charaList/{chara}/delete', [CharacterController::class, 'delete']);
+        Route::get('/charas/{chara}/delete', [CharacterController::class, 'deleteForm'])->name('charas.delete');
+        Route::post('/charas/{chara}/delete', [CharacterController::class, 'delete']);
     });
     
-    Route::get('/gallery', [ImageController::class, 'index'])->name('img.gallery');
     Route::post('/gallery', [ImageController::class, 'upload'])->name('img.upload');
+});
+
+Route::get('/list/chara', function() {
+    $charas = Character::all();
+    return view('lists.characters', [
+        'charas' => $charas,
+    ]);
 });
 
 //Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail');

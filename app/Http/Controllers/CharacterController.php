@@ -28,7 +28,7 @@ class CharacterController extends Controller
         
         $characters = $list->latest()->paginate(15);
         
-        return view('lists.characters.index', [
+        return view('characters.index', [
             'characters' => $characters,
         ]);
     }
@@ -36,7 +36,7 @@ class CharacterController extends Controller
     public function detail(Character $chara){
         $chara->findOrFail($chara->id);
         
-        return view('lists.characters.detail', [
+        return view('characters.detail', [
             'chara' => $chara,
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
@@ -49,7 +49,7 @@ class CharacterController extends Controller
     
     public function createForm(){
         $gallery = Image::orderBy('id', 'DESC')->paginate(15);
-        return view('lists.characters.create', [
+        return view('characters.create', [
             'images' => $gallery,
         ]);
     }
@@ -97,7 +97,7 @@ class CharacterController extends Controller
             $image_session = null;
         }
         
-        return view('lists.characters.createConfirm', [
+        return view('characters.createConfirm', [
             "chara" => $chara_session,
             "image_path" => $image_session,
         ]);
@@ -144,7 +144,7 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         $gallery = Image::orderBy('id', 'DESC')->paginate(15);
         
-        return view('lists.characters.edit', [
+        return view('characters.edit', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_image' => $chara->image_path,
@@ -216,7 +216,7 @@ class CharacterController extends Controller
             return redirect()->route('charas.edit', ["chara" => $chara]);
         }
         
-        return view('lists.characters.editConfirm', [
+        return view('characters.editConfirm', [
             "chara_id" => $chara,
             "chara" => $chara_session,
             "image_path" => $image_session,
@@ -267,7 +267,7 @@ class CharacterController extends Controller
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
         
-        return view('lists.characters.delete', [
+        return view('characters.delete', [
             'chara_id' => $chara->id,
             'chara_name' => $chara->name,
             'chara_image' => $chara->image_path,
