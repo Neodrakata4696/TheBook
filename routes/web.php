@@ -52,12 +52,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/gallery', [ImageController::class, 'upload'])->name('img.upload');
 });
 
-Route::get('/list/chara', function() {
-    $charas = Character::all();
-    return view('lists.characters', [
-        'charas' => $charas,
-    ]);
-});
+Route::get('/list/chara', [CharacterController::class, 'printList'])->name('printList');
+Route::get('/users/{user}/list/chara', [CharacterController::class, 'printListByUser'])->name('printListByUser');
 
 //Route::get('/charaList/{chara}', [CharacterController::class, 'detail'])->name('charas.detail');
 

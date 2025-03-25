@@ -16,13 +16,15 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
-        <table>
-            @foreach($charas as $chara)
-            <tr>
-                <th class="text-nowrap">{{ $chara->name }}</th>
-                <td>{{ $chara->explain }}<br>{{ $chara->descript }}</td>
-            </tr>
-            @endforeach
-        </table>
+        <div class="w-full p-3">
+            <table class="w-full">
+                @foreach($charas as $chara)
+                <tr class="border border-black">
+                    <td class="text-nowrap border-r border-black w-[20%]">{{ $chara->name }}</td>
+                    <td>{{ $chara->explain }}<br>{{ $chara->descript }}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
     </body>
 </html>

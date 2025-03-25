@@ -284,4 +284,20 @@ class CharacterController extends Controller
         
         return redirect()->route('charas.index');
     }
+    
+    public function printList(){
+        $charas = Character::all();
+        return view('charactersList', [
+            'charas' => $charas,
+        ]);
+    }
+    
+    public function printListByUser(User $user){
+        $user = $user->findOrFail($user->id);
+        $charas = Character::where('user_id', [$user->id])->get();
+        return view('charactersList', [
+            'user' => $user,
+            'charas' => $charas,
+        ]);
+    }
 }

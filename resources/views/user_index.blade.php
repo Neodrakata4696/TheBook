@@ -5,6 +5,7 @@
                 {{$user->name}}{{ __(' List') }}
             </h2>
             <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <a href="{{route('printListByUser', ['user' => $user])}}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">印刷</a>
                 @auth
                     @if($user->id === Auth::user()->id)
                         <a href="{{ route('charas.create') }}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">新規作成</a>
