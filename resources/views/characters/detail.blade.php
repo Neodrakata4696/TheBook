@@ -20,7 +20,7 @@
             </div>
             <p>{{$chara_descript}}</p>
         </div>
-        <div class="toolbox mx-4">
+        <div class="toolbox">
             <a href="{{ route('charas.index') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">一覧表に戻る</a>
             @auth
             <a href="{{ route('charas.create') }}" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">新規作成</a>

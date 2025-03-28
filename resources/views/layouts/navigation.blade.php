@@ -48,6 +48,10 @@
 
                     <x-slot name="content">
                         @auth
+                        <x-dropdown-link :href="route( 'users.index', ['user' => Auth::user()->id] )">
+                            {{ __('MyPage') }}
+                        </x-dropdown-link>
+                        
                         <x-dropdown-link :href="route('users.followIndex', ['user' => Auth::user()->id] )">
                             {{ __('followList') }}
                         </x-dropdown-link>
@@ -57,10 +61,6 @@
                         
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
-                        </x-dropdown-link>
-                        
-                        <x-dropdown-link :href="route( 'users.index', ['user' => Auth::user()->id] )">
-                            {{ __('created characterList') }}
                         </x-dropdown-link>
                         
                         <!-- Authentication -->

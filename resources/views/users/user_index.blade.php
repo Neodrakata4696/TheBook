@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
-                {{$user->name}}{{ __(' List') }}
+                {{$user->name}}{{ __('Page') }}
             </h2>
             <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <a href="{{route('printListByUser', ['user' => $user])}}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">印刷</a>
@@ -31,6 +31,7 @@
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         @if($characters->count() !== 0)
+        <h3 class="mt-4 text-lg">{{$user->name}}が作成したキャラクター</h3>
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>
@@ -53,10 +54,24 @@
             </tr>
             @endforeach
         </table>
-        {!! $characters->render() !!}
+        <a href="{{ route('users.charas', ['user' => $user->id]) }}">もっと見る</a>
         @else
         <div class="pt-8">
             <div class="text-center">このユーザーが作成したキャラクターは誰もいません</div>
+        </div>
+        @endif
+        
+        @if($images->count() !== 0)
+        <h3 class="mt-4 text-lg">{{$user->name}}が投稿した画像</h3>
+        <div class="-m-4 my-4 flex flex-wrap">
+            @foreach($images as $image)
+            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44">
+            @endforeach
+        </div>
+        <a href="{{ route('users.images', ['user' => $user->id]) }}">もっと見る</a>
+        @else
+        <div class="pt-8">
+            <div class="text-center">このユーザーが投稿した画像はありません</div>
         </div>
         @endif
     </div>
