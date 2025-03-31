@@ -116,7 +116,8 @@ class CharacterController extends Controller
             $image = new Image();
             $new_image_path = ImageController::getImagePath() . '/' . $image_name;
             Storage::disk('public')->move('img_store/' . $image_name, $new_image_path);
-            $image->name = $original_name;
+            $info_name = pathinfo($original_name, PATHINFO_FILENAME);
+            $image->name = $info_name;
             $image->path = 'storage/' . $new_image_path;
             Auth::user()->images()->save($image);
             $chara->image_path = $image->path;
@@ -237,7 +238,8 @@ class CharacterController extends Controller
             $image = new Image();
             $new_image_path = ImageController::getImagePath() . '/' . $image_name;
             Storage::disk('public')->move('img_store/' . $image_name, $new_image_path);
-            $image->name = $original_name;
+            $info_name = pathinfo($original_name, PATHINFO_FILENAME);
+            $image->name = $info_name;
             $image->path = 'storage/' . $new_image_path;
             Auth::user()->images()->save($image);
             $chara->image_path = $image->path;

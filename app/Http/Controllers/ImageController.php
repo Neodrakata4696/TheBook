@@ -28,13 +28,24 @@ class ImageController extends Controller
         ]);
     }
     
+    public function detail(Image $image){
+        $image->findOrFail($image->id);
+        
+        return view('gallery.detail', [
+            'image' => $image,
+            'image_name' => $image->name,
+            'image_path' => $image->path,
+        ]);
+    }
+    
     public function upload(ImageRequest $request){
         $image_name = $this->getImageName($request);
         $request->file('uploaded_image')->storeAs($this->getImagePath(), $image_name, 'public');
         
         $original_name = $request->file('uploaded_image')->getClientOriginalName();
+        $info_name = pathinfo($original_name, PATHINFO_FILENAME);
         $image = new Image();
-        $image->name = $original_name;
+        $image->name = $info_name;
         $image->path = 'storage/'. $this->getImagePath() . '/' . $image_name;
         Auth::user()->images()->save($image);
         return redirect()->route('img.gallery');
