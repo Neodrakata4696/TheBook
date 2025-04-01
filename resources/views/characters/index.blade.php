@@ -5,7 +5,7 @@
                 {{ __('キャラクター') }}
             </h2>
             <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <a href="./list/chara" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">印刷</a>
+                <a href="{{ route('printList') }}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">印刷</a>
                 @auth
                     <a href="{{ route('charas.create') }}" class="block text-center bg-gray-200 px-3 shadow-sm sm:rounded-lg">新規作成</a>
                 @endauth
