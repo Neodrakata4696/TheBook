@@ -21,7 +21,7 @@ class UserController extends Controller
         $characters = $user->characters()->latest()->paginate(15);
         $images = $user->images()->latest()->paginate(15);
         
-        return view('users.user_index', [
+        return view('users.index', [
             'characters' => $characters,
             'images' => $images,
             'user' => $user,
@@ -32,7 +32,7 @@ class UserController extends Controller
         $user->findOrFail($user->id);
         $characters = $user->characters()->latest()->paginate(15);
         
-        return view('users.user_chara', [
+        return view('users.chara', [
             'characters' => $characters,
             'user' => $user,
         ]);
@@ -42,7 +42,7 @@ class UserController extends Controller
         $user->findOrFail($user->id);
         $images = $user->images()->latest()->paginate(15);
         
-        return view('users.user_image', [
+        return view('users.image', [
             'images' => $images,
             'user' => $user,
         ]);
