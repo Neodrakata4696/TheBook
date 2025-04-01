@@ -33,8 +33,6 @@ class ImageController extends Controller
         
         return view('gallery.detail', [
             'image' => $image,
-            'image_name' => $image->name,
-            'image_path' => $image->path,
         ]);
     }
     
