@@ -26,6 +26,7 @@ Route::get('/charas', [CharacterController::class, 'index'])->name('charas.index
 Route::get('/charas/{chara}', [CharacterController::class, 'detail'])->name('charas.detail')->where('chara', '[0-9]+');
 
 Route::get('/gallery', [ImageController::class, 'index'])->name('img.gallery');
+Route::get('/gallery/{image}', [ImageController::class, 'detail'])->name('images.detail')->where('image', '[0-9]+');
 
 Route::get('/users/{user}', [UserController::class, 'userIndex'])->name('users.index');
 Route::get('/users/{user}/charas', [UserController::class, 'userCharacters'])->name('users.charas');
