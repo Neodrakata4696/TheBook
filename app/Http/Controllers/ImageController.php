@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\Character;
 use App\Http\Requests\ImageRequest;
 use Carbon\Carbon;
 
@@ -30,9 +31,11 @@ class ImageController extends Controller
     
     public function detail(Image $image){
         $image->findOrFail($image->id);
+        $charas = Character::where('image_id', [$image->id])->get();
         
         return view('gallery.detail', [
             'image' => $image,
+            'charas' => $charas,
         ]);
     }
     
