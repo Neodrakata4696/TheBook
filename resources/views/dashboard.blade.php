@@ -16,8 +16,8 @@
                 <a href="{{ route('users.index', ['user' => $character->user->id]) }}" class="text-sky-800">{{ $character->user->name }}</a>
             </div>
                 <div class="flex my-4">
-                @if($character->image_path !== null)
-                <img src="{{ asset($character->image_path) }}" class="mx-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
+                @if($character->image !== null)
+                <img src="{{ asset($character->image->path) }}" class="mx-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
                 @endif
                 <p>{{$character->explain}}</p>
             </div>
