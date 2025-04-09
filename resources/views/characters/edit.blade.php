@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($chara_name. ' 編集') }}
+            {{ __($chara->name. ' 編集') }}
         </h2>
     </x-slot>
     
@@ -13,24 +13,24 @@
             @endforeach
         </ul>
         @endif
-        <form name="inputus" method="post" action="{{ route('charas.edit', ['chara' => $chara_id]) }}" enctype="multipart/form-data">
+        <form name="inputus" method="post" action="{{ route('charas.edit', ['chara' => $chara->id]) }}" enctype="multipart/form-data">
             <table class="bar w-full bg-white my-3">
                 <tr>
                     <th class="w-1/6">キャラクター名</th>
-                    <td><input type="text" name="name" value="{{ old('name') ?? $chara_name }}" class="w-4/12"></td>
+                    <td><input type="text" name="name" value="{{ old('name') ?? $chara->name }}" class="w-4/12"></td>
                 </tr>
                 <tr>
                     <th class="w-1/6">説明</th>
                     <td class="textboard">
-                        <div class="dummy_textarea" aria-hidden="true">{{ old('explain') ?? $chara_explain }}</div>
-                        <textarea type="text" name="explain" class="retextarea w-full h-full">{{ old('explain') ?? $chara_explain }}</textarea>
+                        <div class="dummy_textarea" aria-hidden="true">{{ old('explain') ?? $chara->explain }}</div>
+                        <textarea type="text" name="explain" class="retextarea w-full h-full">{{ old('explain') ?? $chara->explain }}</textarea>
                     </td>
                 </tr>
                 <tr>
                     <th class="w-1/6">もっと詳しく</th>
                     <td class="textboard">
-                        <div class="dummy_textarea" aria-hidden="true">{{ old('descript') ?? $chara_descript }}</div>
-                        <textarea type="text" name="descript" class="retextarea w-full h-full">{{ old('descript') ?? $chara_descript }}</textarea>
+                        <div class="dummy_textarea" aria-hidden="true">{{ old('descript') ?? $chara->descript }}</div>
+                        <textarea type="text" name="descript" class="retextarea w-full h-full">{{ old('descript') ?? $chara->descript }}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -39,8 +39,9 @@
                         <input type="radio" name="i-radio" value="upload">
                         <input type="file" name="uploaded_image" id="uploaded_image" accept="image/png, image/jpeg">
                         <p class="text-center">または</p>
-                        <input type="radio" name="i-radio" value="select" {{ old('$selected_image') == $chara_image ? '' : 'checked' }}>
-                        <input type="text" name="selected_image" id="selected_image" class="w-full max-w-[90%] px-0" value="{{ old('selected_image') ?? $chara_image }}" readonly>
+                        <input type="radio" name="i-radio" value="select" {{ old('$selected_image') == $chara->image ? '' : 'checked' }}>
+                        <input type="hidden" name="selected_image" id="selected_image">
+                        <input type="text" name="selected_image_path" id="selected_image_path" class="w-full max-w-[90%] px-0" value="{{ old('selected_image') ?? $chara->image->name }}" readonly>
                         <button type="button" id="selecter_open" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 disabled:bg-gray-400 text-white px-2">選択</button>
                     </td>
                 </tr>
@@ -55,7 +56,7 @@
                     <h2 class="text-lg font-medium text-gray-900 my-4">画像を選択してください。</h2>
                     <button type="button" x-on:click="$dispatch('close')">閉じる</button>
                 </div>
-                <input type="text" name="selected-image-flag" id="selected_image_flag" class="border-none w-full" value="{{ old('selected-image-flag') ?? $chara_image }}" readonly>
+                <input type="text" name="selected-image-flag" id="selected_image_flag" class="border-none w-full" value="{{ old('selected-image-flag') ?? $chara->image->name }}" readonly>
                 <div id="gallery">
                     @include('gallery.view')
                 </div>

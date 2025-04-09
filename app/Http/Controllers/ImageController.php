@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\Character;
 use App\Http\Requests\ImageRequest;
 use Carbon\Carbon;
 
@@ -28,13 +29,24 @@ class ImageController extends Controller
         ]);
     }
     
+    public function detail(Image $image){
+        $image->findOrFail($image->id);
+        $charas = Character::where('image_id', [$image->id])->get();
+        
+        return view('gallery.detail', [
+            'image' => $image,
+            'charas' => $charas,
+        ]);
+    }
+    
     public function upload(ImageRequest $request){
         $image_name = $this->getImageName($request);
         $request->file('uploaded_image')->storeAs($this->getImagePath(), $image_name, 'public');
         
         $original_name = $request->file('uploaded_image')->getClientOriginalName();
+        $info_name = pathinfo($original_name, PATHINFO_FILENAME);
         $image = new Image();
-        $image->name = $original_name;
+        $image->name = $info_name;
         $image->path = 'storage/'. $this->getImagePath() . '/' . $image_name;
         Auth::user()->images()->save($image);
         return redirect()->route('img.gallery');
