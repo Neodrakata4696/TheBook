@@ -38,12 +38,6 @@ class CharacterController extends Controller
         
         return view('characters.detail', [
             'chara' => $chara,
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_image' => $chara->image_path,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
-            'chara_user' => $chara->user->name,
         ]);
     }
     
@@ -55,7 +49,7 @@ class CharacterController extends Controller
     }
     
     public function create(CreateCharacter $request){
-        $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
+        $request->session()->forget(["chara_session", "image_session", "image_id_session", "image_name_session", "image_original_session"]);
         $chara_session = $request->only($this->chara_input);
         
         $validated = $request->validate([
@@ -72,8 +66,8 @@ class CharacterController extends Controller
             $request->session()->put("image_original_session", $original_name);
         }
         else if ($request->selected_image !== null){
-            $getpath = $request->selected_image;
-            $request->session()->put("image_path_session", $getpath);
+            $getid = $request->selected_image;
+            $request->session()->put("image_id_session", $getid);
         }
         $request->session()->put("chara_session", $chara_session);
         
@@ -90,8 +84,8 @@ class CharacterController extends Controller
         if ($request->session()->get("image_session") !== null){
             $image_session = $request->session()->get("image_session");
         }
-        else if ($request->session()->get("image_path_session") !== null){
-            $image_session = $request->session()->get("image_path_session");
+        else if ($request->session()->get("image_id_session") !== null){
+            $image_session = Image::find($request->session()->get("image_id_session"))->path;
         }
         else{
             $image_session = null;
@@ -106,7 +100,7 @@ class CharacterController extends Controller
     public function createSend(Request $request){
         $chara_session = $request->session()->get("chara_session");
         $image_session = $request->session()->get("image_session");
-        $image_path_session = $request->session()->get("image_path_session");
+        $image_id_session = $request->session()->get("image_id_session");
         $image_name = $request->session()->get("image_name_session");
         $original_name = $request->session()->get("image_original_session");
         
@@ -120,14 +114,14 @@ class CharacterController extends Controller
             $image->name = $info_name;
             $image->path = 'storage/' . $new_image_path;
             Auth::user()->images()->save($image);
-            $chara->image_path = $image->path;
+            $chara->image_id = $image->id;
             $request->session()->forget("image_session");
             $request->session()->forget("image_name_session");
             $request->session()->forget("image_original_session");
         }
-        else if ($image_path_session !== null){
-            $chara->image_path = $image_path_session;
-            $request->session()->forget("image_path_session");
+        else if ($image_id_session !== null){
+            $chara->image_id = $image_id_session;
+            $request->session()->forget("image_id_session");
         }
         
         $chara->name = $chara_session['name'];
@@ -146,11 +140,7 @@ class CharacterController extends Controller
         $gallery = Image::orderBy('id', 'DESC')->paginate(15);
         
         return view('characters.edit', [
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_image' => $chara->image_path,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
+            'chara' => $chara,
             'images' => $gallery,
         ]);
     }
@@ -159,7 +149,7 @@ class CharacterController extends Controller
         $user = Auth::user();
         $chara = $user->characters()->findOrFail($chara->id);
         
-        $request->session()->forget(["chara_session", "image_session", "image_path_session", "image_name_session", "image_original_session"]);
+        $request->session()->forget(["chara_session", "image_session", "image_id_session", "image_name_session", "image_original_session"]);
         $chara_session = $request->only($this->chara_input);
         
         $validated = $request->validate([
@@ -176,8 +166,8 @@ class CharacterController extends Controller
             $request->session()->put("image_original_session", $original_name);
         }
         else if ($request->selected_image !== null){
-            $getpath = $request->selected_image;
-            $request->session()->put("image_path_session", $getpath);
+            $getid = $request->selected_image;
+            $request->session()->put("image_id_session", $getid);
         }
         $request->session()->put("chara_session", $chara_session);
         
@@ -206,8 +196,8 @@ class CharacterController extends Controller
         if ($request->session()->get("image_session") !== null){
             $image_session = $request->session()->get("image_session");
         }
-        else if ($request->session()->get("image_path_session") !== null){
-            $image_session = $request->session()->get("image_path_session");
+        else if ($request->session()->get("image_id_session") !== null){
+            $image_session = Image::find($request->session()->get("image_id_session"))->path;
         }
         else{
             $image_session = null;
@@ -230,7 +220,7 @@ class CharacterController extends Controller
         
         $chara_session = $request->session()->get("chara_session");
         $image_session = $request->session()->get("image_session");
-        $image_path_session = $request->session()->get("image_path_session");
+        $image_id_session = $request->session()->get("image_id_session");
         $image_name = $request->session()->get("image_name_session");
         $original_name = $request->session()->get("image_original_session");
         
@@ -242,17 +232,17 @@ class CharacterController extends Controller
             $image->name = $info_name;
             $image->path = 'storage/' . $new_image_path;
             Auth::user()->images()->save($image);
-            $chara->image_path = $image->path;
+            $chara->image_id = $image->id;
             $request->session()->forget("image_session");
             $request->session()->forget("image_name_session");
             $request->session()->forget("image_original_session");
         }
-        else if ($image_path_session !== null){
-            $chara->image_path = $image_path_session;
-            $request->session()->forget("image_path_session");
+        else if ($image_id_session !== null){
+            $chara->image_id = $image_id_session;
+            $request->session()->forget("image_id_session");
         }
         else{
-            $chara->image_path = null;
+            $chara->image_id = null;
         }
         
         $chara->name = $chara_session['name'];
@@ -270,11 +260,7 @@ class CharacterController extends Controller
         $chara = $user->characters()->findOrFail($chara->id);
         
         return view('characters.delete', [
-            'chara_id' => $chara->id,
-            'chara_name' => $chara->name,
-            'chara_image' => $chara->image_path,
-            'chara_explain' => $chara->explain,
-            'chara_descript' => $chara->descript,
+            'chara' => $chara,
         ]);
     }
     
