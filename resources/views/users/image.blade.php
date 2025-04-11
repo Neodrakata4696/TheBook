@@ -27,7 +27,7 @@
         @if($images->count() !== 0)
         <div class="-m-4 my-4 flex flex-wrap">
             @foreach($images as $image)
-            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44">
+            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44" onclick="location.href='{{ route('images.detail', ['image' => $image->id]) }}'">
             @endforeach
         </div>
         @else
