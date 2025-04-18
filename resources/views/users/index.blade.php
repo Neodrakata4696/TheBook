@@ -65,7 +65,7 @@
         <h3 class="mt-4 text-lg">{{$user->name}}が投稿した画像</h3>
         <div class="-m-4 my-4 flex flex-wrap">
             @foreach($images as $image)
-            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44">
+            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44" onclick="location.href='{{ route('images.detail', ['image' => $image->id]) }}'">
             @endforeach
         </div>
         <a href="{{ route('users.images', ['user' => $user->id]) }}">もっと見る</a>

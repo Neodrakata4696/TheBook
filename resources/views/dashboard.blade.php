@@ -17,7 +17,7 @@
             </div>
                 <div class="flex my-4">
                 @if($character->image !== null)
-                <img src="{{ asset($character->image->path) }}" class="mx-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44">
+                <img src="{{ asset($character->image->path) }}" class="mx-4 ml-0 mb-0 w-full max-w-44 h-full max-h-44" onclick="location.href='{{ route('images.detail', ['image' => $character->image->id]) }}'">
                 @endif
                 <p>{{$character->explain}}</p>
             </div>
