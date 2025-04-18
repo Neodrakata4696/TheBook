@@ -41,7 +41,7 @@
                         <p class="text-center">または</p>
                         <input type="radio" name="i-radio" value="select" {{ old('$selected_image') == $chara->image ? '' : 'checked' }}>
                         <input type="hidden" name="selected_image" id="selected_image">
-                        <input type="text" name="selected_image_path" id="selected_image_path" class="w-full max-w-[90%] px-0" value="{{ old('selected_image') ?? $chara->image->name }}" readonly>
+                        <input type="text" name="selected_image_path" id="selected_image_path" class="w-full max-w-[90%] px-0" value="{{ old('selected_image_path') ?? $chara->image }}" readonly>
                         <button type="button" id="selecter_open" x-data="" x-on:click.prevent="$dispatch('open-modal', 'image-uploader')" class="bg-blue-500 disabled:bg-gray-400 text-white px-2">選択</button>
                     </td>
                 </tr>
@@ -56,7 +56,7 @@
                     <h2 class="text-lg font-medium text-gray-900 my-4">画像を選択してください。</h2>
                     <button type="button" x-on:click="$dispatch('close')">閉じる</button>
                 </div>
-                <input type="text" name="selected-image-flag" id="selected_image_flag" class="border-none w-full" value="{{ old('selected-image-flag') ?? $chara->image->name }}" readonly>
+                <input type="text" name="selected-image-flag" id="selected_image_flag" class="border-none w-full" value="{{ old('selected-image-flag') ?? $chara->image }}" readonly>
                 <div id="gallery">
                     @include('gallery.view')
                 </div>

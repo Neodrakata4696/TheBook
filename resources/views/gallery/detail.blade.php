@@ -18,7 +18,7 @@
                     <h2 class="pt-4 text-xl">この画像を使用しているキャラクター</h2>
                     @foreach($charas as $chara)
                         <a href="{{ route('charas.detail', ['chara' => $chara->id]) }}" class="text-sky-800">
-                            {{ $chara->name }}
+                            {{ $chara->name }}<br>
                         </a>
                     @endforeach
                 </div>
