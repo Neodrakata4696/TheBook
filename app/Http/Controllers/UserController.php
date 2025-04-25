@@ -47,4 +47,12 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+    
+    public function userBookmarkPage(User $user){
+        $user->findOrFail($user->id);
+        
+        return view('users.bookmark', [
+            'user' => $user,
+        ]);
+    }
 }
