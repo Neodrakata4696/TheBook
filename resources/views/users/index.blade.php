@@ -74,6 +74,22 @@
             <div class="text-center">このユーザーが投稿した画像はありません</div>
         </div>
         @endif
+        
+        @if($bookmarks->count() !== 0)
+        <h3 class="mt-4 text-lg">{{$user->name}}のブックマーク</h3>
+        <div>
+            @foreach($bookmarks as $bookmark)
+            <div class="flex justify-between">
+                <a href="{{ route('charas.detail', ['chara' => $bookmark->character->id]) }}" class="text-sky-800">{{ $bookmark->character->name }}</a>
+            </div>
+            @endforeach
+        </div>
+        <a href="{{ route('users.bookmark', ['user' => $user->id]) }}">もっと見る</a>
+        @else
+        <div class="pt-8">
+            <div class="text-center">このユーザーのブックマークはありません</div>
+        </div>
+        @endif
     </div>
     <script src="{{ asset('/js/followSystem.js') }}"></script>
 </x-app-layout>

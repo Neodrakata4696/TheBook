@@ -1,8 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($chara->name. ' 詳細情報') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __($chara->name. ' 詳細情報') }}
+            </h2>
+            @if($chara->user->id !== Auth::user()->id)
+            <form>
+                @csrf
+                @if($marked)
+                <button type="button" href="{{ route('charas.bookmark', $chara->id) }}" id="bookmark">★</button>
+                @else
+                <button type="button" href="{{ route('charas.bookmark', $chara->id) }}" id="bookmark">☆</button>
+                @endif
+            </form>
+            @endif
+        </div>
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -33,4 +45,5 @@
             @endauth
         </div>
     </div>
+    <script src="{{ asset('/js/bookmark.js') }}"></script>
 </x-app-layout>

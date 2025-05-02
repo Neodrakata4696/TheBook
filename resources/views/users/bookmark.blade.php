@@ -10,7 +10,12 @@
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="-m-4 my-4 flex flex-wrap">
+        <div class="bg-white -mx-4 mt-4 p-4">
+            @foreach($bookmarks as $bookmark)
+            <div class="flex justify-between">
+                <a href="{{ route('charas.detail', ['chara' => $bookmark->character->id]) }}" class="text-sky-800">{{ $bookmark->character->name }}</a>
+            </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Character;
 use App\Models\FollowUser;
 use App\Models\Image;
+use App\Models\Bookmark;
 use App\Http\Controllers\ImageController;
 use App\Http\Requests\CreateCharacter;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +37,19 @@ class CharacterController extends Controller
     public function detail(Character $chara){
         $chara->findOrFail($chara->id);
         
+        $user = Auth::user();
+        $existingBookmark = Bookmark::where('character_id', $chara->id)->where('user_id', $user->id)->first();
+        
+        if ($existingBookmark){
+            $marked = true;
+        }
+        else{
+            $marked = false;
+        }
+        
         return view('characters.detail', [
             'chara' => $chara,
+            'marked' => $marked,
         ]);
     }
     
@@ -271,6 +283,29 @@ class CharacterController extends Controller
         $chara->delete();
         
         return redirect()->route('charas.index');
+    }
+    
+    public function bookmark(Request $request, Character $chara){
+        $user = Auth::user();
+        $chara->findOrFail($chara->id);
+        
+        if ($user){
+            $existingBookmark = Bookmark::where('character_id', $chara->id)->where('user_id', $user->id)->first();
+            
+            if (!$existingBookmark) {
+                $bookmark = new Bookmark();
+                $bookmark->character_id = $chara->id;
+                $bookmark->user_id = $user->id;
+                $bookmark->save();
+            }
+            else{
+                $bookmark = Bookmark::where('character_id', $chara->id)->where('user_id', $user->id)->delete();
+            }
+            
+            return response()->json($bookmark);
+        }else{
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
     
     public function printList(){
