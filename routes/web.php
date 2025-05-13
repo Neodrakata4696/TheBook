@@ -53,10 +53,9 @@ Route::group(['middleware' => 'auth'], function() {
         
         Route::get('/charas/{chara}/delete', [CharacterController::class, 'deleteForm'])->name('charas.delete');
         Route::post('/charas/{chara}/delete', [CharacterController::class, 'delete']);
-        
-        Route::post('/charas/{chara}/bookmark', [CharacterController::class, 'bookmark'])->name('charas.bookmark');
     });
     
+    Route::post('/charas/{chara}', [CharacterController::class, 'bookmark'])->name('charas.bookmark');
     Route::post('/gallery', [ImageController::class, 'upload'])->name('img.upload');
 });
 

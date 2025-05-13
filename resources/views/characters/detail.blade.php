@@ -8,9 +8,9 @@
             <form>
                 @csrf
                 @if($marked)
-                <button type="button" href="{{ route('charas.bookmark', $chara->id) }}" id="bookmark">★</button>
+                <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">★</button>
                 @else
-                <button type="button" href="{{ route('charas.bookmark', $chara->id) }}" id="bookmark">☆</button>
+                <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">☆</button>
                 @endif
             </form>
             @endif

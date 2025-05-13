@@ -2,9 +2,8 @@ $.ajaxSetup({
     headers: { 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")},
 })
 
-$('#bookmark').on('click', function(event) {
+$('.bookmark').on('click', function(event) {
     var jumpUrl = $(event.target);
-    var marker = document.getElementById('bookmark');
     $.ajax({
         method: "POST",
         url: jumpUrl.attr('href'),
@@ -14,12 +13,11 @@ $('#bookmark').on('click', function(event) {
         },
     })
     .done(function(res) {
-        console.log(jumpUrl.attr('href'));
-        if (marker.textContent === '★'){
-            marker.textContent = "☆";
+        if ($(event.target).text() === '★'){
+            $(event.target).text("☆");
         }
         else{
-            marker.textContent = "★";
+            $(event.target).text("★");
         }
     })
     .fail(function() {

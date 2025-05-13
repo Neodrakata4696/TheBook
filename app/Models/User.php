@@ -66,6 +66,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\User', 'follow_users', 'following_user_id', 'followed_user_id');
     }
     
+    public function isBookmarkedBy($chara): bool {
+        return Bookmark::where('user_id', $this->id)->where('character_id', $chara->id)->first() !== null;
+    }
+    
     public function isFollowedBy($user): bool {
         return FollowUser::where('followed_user_id', $this->id)->where('following_user_id', $user->id)->first() !== null;
     }
