@@ -77,10 +77,11 @@
         
         @if($bookmarks->count() !== 0)
         <h3 class="mt-4 text-lg">{{$user->name}}のブックマーク</h3>
-        <div>
+        <div class="bg-white">
             @foreach($bookmarks as $bookmark)
             <div class="flex justify-between">
                 <a href="{{ route('charas.detail', ['chara' => $bookmark->character->id]) }}" class="text-sky-800">{{ $bookmark->character->name }}</a>
+                <button type="button" href="{{ route('charas.bookmark', ['chara' => $bookmark->character->id]) }}" class="bookmark px-4">★</button>
             </div>
             @endforeach
         </div>
@@ -92,4 +93,5 @@
         @endif
     </div>
     <script src="{{ asset('/js/followSystem.js') }}"></script>
+    <script src="{{ asset('/js/bookmark.js') }}"></script>
 </x-app-layout>

@@ -4,15 +4,17 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __($chara->name. ' 詳細情報') }}
             </h2>
-            @if($chara->user->id !== Auth::user()->id)
-            <form>
-                @csrf
-                @if($marked)
-                <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">★</button>
-                @else
-                <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">☆</button>
+            @if(Auth::user())
+                @if($chara->user->id !== Auth::user()->id)
+                <form>
+                    @csrf
+                    @if($marked)
+                    <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">★</button>
+                    @else
+                    <button type="button" href="{{ route('charas.bookmark', ['chara' => $chara->id]) }}" class="bookmark">☆</button>
+                    @endif
+                </form>
                 @endif
-            </form>
             @endif
         </div>
     </x-slot>

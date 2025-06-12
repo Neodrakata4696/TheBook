@@ -36,15 +36,18 @@ class CharacterController extends Controller
     
     public function detail(Character $chara){
         $chara->findOrFail($chara->id);
+        $marked = false;
         
-        $user = Auth::user();
-        $existingBookmark = Bookmark::where('character_id', $chara->id)->where('user_id', $user->id)->first();
-        
-        if ($existingBookmark){
-            $marked = true;
-        }
-        else{
-            $marked = false;
+        if (Auth::user()){
+            $user = Auth::user();
+            $existingBookmark = Bookmark::where('character_id', $chara->id)->where('user_id', $user->id)->first();
+
+            if ($existingBookmark){
+                $marked = true;
+            }
+            else{
+                $marked = false;
+            }
         }
         
         return view('characters.detail', [
