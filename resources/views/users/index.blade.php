@@ -65,7 +65,7 @@
         <h3 class="mt-4 text-lg">{{$user->name}}が投稿した画像</h3>
         <div class="-m-4 my-4 flex flex-wrap">
             @foreach($images as $image)
-            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44">
+            <img src="{{ asset($image->path) }}" class="bg-white m-4 w-full max-w-44 h-full max-h-44" onclick="location.href='{{ route('images.detail', ['image' => $image->id]) }}'">
             @endforeach
         </div>
         <a href="{{ route('users.images', ['user' => $user->id]) }}">もっと見る</a>
@@ -74,6 +74,24 @@
             <div class="text-center">このユーザーが投稿した画像はありません</div>
         </div>
         @endif
+        
+        @if($bookmarks->count() !== 0)
+        <h3 class="mt-4 text-lg">{{$user->name}}のブックマーク</h3>
+        <div class="bg-white">
+            @foreach($bookmarks as $bookmark)
+            <div class="flex justify-between">
+                <a href="{{ route('charas.detail', ['chara' => $bookmark->character->id]) }}" class="text-sky-800">{{ $bookmark->character->name }}</a>
+                <button type="button" href="{{ route('charas.bookmark', ['chara' => $bookmark->character->id]) }}" class="bookmark px-4">★</button>
+            </div>
+            @endforeach
+        </div>
+        <a href="{{ route('users.bookmark', ['user' => $user->id]) }}">もっと見る</a>
+        @else
+        <div class="pt-8">
+            <div class="text-center">このユーザーのブックマークはありません</div>
+        </div>
+        @endif
     </div>
     <script src="{{ asset('/js/followSystem.js') }}"></script>
+    <script src="{{ asset('/js/bookmark.js') }}"></script>
 </x-app-layout>

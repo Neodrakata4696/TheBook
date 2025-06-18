@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::post('/users/{user}/follow', [FollowUserController::class, 'follow'])->name('users.follow');
     
+    Route::get('/users/{user}/bookmark', [UserController::class, 'userBookmarkPage'])->name('users.bookmark');
+    
     Route::group(['middleware' => 'can:view,chara'], function() {
         Route::get('/charas/{chara}/edit', [CharacterController::class, 'editForm'])->name('charas.edit');
         Route::post('/charas/{chara}/edit', [CharacterController::class, 'edit']);
@@ -53,6 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/charas/{chara}/delete', [CharacterController::class, 'delete']);
     });
     
+    Route::post('/charas/{chara}', [CharacterController::class, 'bookmark'])->name('charas.bookmark');
     Route::post('/gallery', [ImageController::class, 'upload'])->name('img.upload');
 });
 

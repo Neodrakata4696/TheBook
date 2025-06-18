@@ -17,20 +17,20 @@
             <table class="bar w-full bg-white my-3">
                 <tr>
                     <th class="w-1/6">キャラクター名</th>
-                    <td><input type="text" name="name" class="w-4/12"></td>
+                    <td><input type="text" name="name" class="w-4/12" value="{{ old('name') }}"></td>
                 </tr>
                 <tr>
                     <th class="w-1/6">説明</th>
                     <td class="textboard">
                         <div class="dummy_textarea" aria-hidden="true"></div>
-                        <textarea type="text" name="explain" class="retextarea w-full h-full"></textarea>
+                        <textarea type="text" name="explain" class="retextarea w-full h-full" value="{{ old('explain') }}"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th class="w-1/6">もっと詳しく</th>
                     <td class="textboard">
                         <div class="dummy_textarea" aria-hidden="true"></div>
-                        <textarea type="text" name="descript" class="retextarea w-full h-full"></textarea>
+                        <textarea type="text" name="descript" class="retextarea w-full h-full" value="{{ old('descript') }}"></textarea>
                     </td>
                 </tr>
                 <tr>
