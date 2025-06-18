@@ -52,6 +52,10 @@
                             {{ __('MyPage') }}
                         </x-dropdown-link>
                         
+                        <x-dropdown-link :href="route( 'users.bookmark', ['user' => Auth::user()->id] )">
+                            {{ __('Bookmark') }}
+                        </x-dropdown-link>
+                        
                         <x-dropdown-link :href="route('users.followIndex', ['user' => Auth::user()->id] )">
                             {{ __('followList') }}
                         </x-dropdown-link>
@@ -128,6 +132,14 @@
             
             <div class="mt-3 space-y-1">
                 @auth
+                <x-responsive-nav-link :href="route('users.index', ['user' => Auth::user()->id] )">
+                    {{ __('MyPage') }}
+                </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('users.bookmark', ['user' => Auth::user()->id] )">
+                    {{ __('Bookmark') }}
+                </x-responsive-nav-link>
+                
                 <x-responsive-nav-link :href="route('users.followIndex', ['user' => Auth::user()->id] )">
                     {{ __('followList') }}
                 </x-responsive-nav-link>
@@ -137,10 +149,6 @@
                 
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
-                
-                <x-responsive-nav-link :href="route( 'users.index', ['user' => Auth::user()->id] )">
-                    {{ __('created characterList') }}
                 </x-responsive-nav-link>
                 
                 <!-- Authentication -->

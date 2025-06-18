@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Character;
 use App\Models\Image;
+use App\Models\Bookmark;
 
 class UserController extends Controller
 {
@@ -20,10 +21,12 @@ class UserController extends Controller
         $user->findOrFail($user->id);
         $characters = $user->characters()->latest()->paginate(15);
         $images = $user->images()->latest()->paginate(15);
+        $bookmarks = $user->bookmarks()->latest()->paginate(5);
         
         return view('users.index', [
             'characters' => $characters,
             'images' => $images,
+            'bookmarks' => $bookmarks,
             'user' => $user,
         ]);
     }
@@ -50,9 +53,11 @@ class UserController extends Controller
     
     public function userBookmarkPage(User $user){
         $user->findOrFail($user->id);
+        $bookmarks = Bookmark::where('user_id', $user->id)->latest()->paginate(15);
         
         return view('users.bookmark', [
             'user' => $user,
+            'bookmarks' => $bookmarks,
         ]);
     }
 }
