@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Search;
 use App\Models\Character;
 use App\Models\FollowUser;
 use App\Models\Image;
@@ -19,18 +20,20 @@ class CharacterController extends Controller
 {
     private $chara_input = ["name", "explain", "descript"];
     
+    public function __construct(Search $search){
+        $this->search = $search;
+    }
+    
     public function index(Request $request){
         $list = Character::query();
         
-        $keyword = $request->input('keyword');
-        if(!empty($keyword)) {
-            $list->where('name', 'LIKE', "%{$keyword}%")->orWhere('explain', 'LIKE', "%{$keyword}%")->get();
-        }
-        
-        $characters = $list->latest()->paginate(15);
+        $keyword = $this->search->escape($request->input('keyword'));
+        $keywords = $this->search->pregSplit($keyword);
+        $results = $this->search->searchQuery($list, $keywords);
         
         return view('characters.index', [
-            'characters' => $characters,
+            'characters' => $results,
+            'keywords' => $keywords,
         ]);
     }
     
