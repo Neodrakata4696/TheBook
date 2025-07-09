@@ -17,7 +17,7 @@
         @if($characters->count() !== 0)
         <form method="get" action="{{ route('charas.index') }}" class="flex mt-4 my-4">
             @csrf
-            <input type="text" name="keyword" class="w-11/12">
+            <input type="text" name="keyword" class="w-11/12" value="{{ old('keyword', $keyword) }}">
             <button type="submit" class="bg-blue-500 text-white px-3 py-2 mx-auto shadow-sm sm:rounded-lg">検索</button>
         </form>
         <table class="list bg-white w-full my-3">

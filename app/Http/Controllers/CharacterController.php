@@ -34,6 +34,7 @@ class CharacterController extends Controller
         return view('characters.index', [
             'characters' => $results,
             'keywords' => $keywords,
+            'keyword' => $keyword,
         ]);
     }
     
