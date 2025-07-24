@@ -4,7 +4,7 @@
             @auth
             <form method="post" action="{{ route('img.upload') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="file" name="uploaded_image" accept="image/png, image/jpeg" required>
+                <input type="file" name="uploaded_image" accept="image/png, image/jpeg" class="w-[250px] sm:w-auto" required>
                 <button class="bg-gray-200 px-4 float-right">アップロード</button>
             </form>
             @endauth
