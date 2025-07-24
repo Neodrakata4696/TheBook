@@ -116,6 +116,9 @@
             <x-responsive-nav-link :href="route('charas.index')" :active="request()->routeIs('charas.index')">
                 {{ __('キャラクター一覧') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('img.gallery')">
+                {{ __('ギャラリー') }}
+            </x-responsive-nav-link>
         </div>
         
         <!-- Responsive Settings Options -->
