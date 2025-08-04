@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('charas.index')" :active="request()->routeIs('charas.index')">
                         {{ __('キャラクター一覧') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('stories.index')" :active="request()->routeIs('stories.index')">
+                        {{ __('ストーリー')}}
+                    </x-nav-link>
                     <x-nav-link :href="route('img.gallery')">
                         {{ __('ギャラリー') }}
                     </x-nav-link>
@@ -115,6 +118,12 @@
             @endauth
             <x-responsive-nav-link :href="route('charas.index')" :active="request()->routeIs('charas.index')">
                 {{ __('キャラクター一覧') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('stories.index')" :active="request()->routeIs('stories.index')">
+                {{ __('ストーリー') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('img.gallery')">
+                {{ __('ギャラリー') }}
             </x-responsive-nav-link>
         </div>
         
