@@ -28,6 +28,11 @@
                 <h3>{{$story->title}}</h3>
                 <a href="{{ route('users.index', ['user' => $story->user->id]) }}" class="text-sky-800">{{ $story->user->name }}</a>
             </div>
+            <div class="flex border-b border-black">
+                @foreach($characters as $character)
+                <a href="{{route('charas.detail', ['chara' => $character->character->id])}}" class="text-sky-800 mr-1">{{ $character->character->name }}</a>
+                @endforeach
+            </div>
             {{ $story->contents }}
         </div>
         <div class="toolbox">

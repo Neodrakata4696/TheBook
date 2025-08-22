@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Story;
+use App\Models\Character;
+use App\Models\StoryCharacter;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\WriteStory;
 
 class StoryController extends Controller
 {
@@ -20,21 +23,33 @@ class StoryController extends Controller
     
     public function storyPage(Story $story){
         $story->findOrFail($story->id);
+        $characters = StoryCharacter::where('story_id', $story->id)->get();
         
         return view('stories.story', [
             'story' => $story,
+            'characters' => $characters,
         ]);
     }
     
     public function createForm(){
-        return view('stories.create');
+        $characters = Character::all();
+        return view('stories.create', [
+            "characters" => $characters,
+        ]);
     }
     
-    public function create(Request $request){
-        $request->session()->forget(["story_session"]);
+    public function create(WriteStory $request){
+        $request->session()->forget(["story_session", "characters_session"]);
         $story_session = $request->only($this->story_input);
         
         $request->session()->put("story_session", $story_session);
+        $characters = [];
+        if ($request->input('characters') !== null){
+            foreach ($request->input('characters') as $character){
+                $characters[] = $character;
+            }
+            $request->session()->put('characters_session', $characters);
+        }
         
         $request->session()->put('token', csrf_token());
         return redirect()->route('stories.createConfirm');
@@ -46,21 +61,45 @@ class StoryController extends Controller
         }
         
         $story_session = $request->session()->get("story_session");
+        $characters_session = $request->session()->get("characters_session");
+        $characters = [];
+        
+        if ($characters_session){
+            $characterBox = Character::all();
+            foreach($characters_session as $character_session){
+                $character = $characterBox->find($character_session);
+                $characters[] = $character->name;
+            }
+        }
         
         return view('stories.createConfirm', [
             "story" => $story_session,
+            "characters" => $characters,
         ]);
     }
     
     public function createSend(Request $request){
         $story_session = $request->session()->get("story_session");
+        $characters_session = $request->session()->get("characters_session");
         
         $story = new Story;
         
         $story->title = $story_session['title'];
         $story->contents = $story_session['contents'];
         Auth::user()->stories()->save($story);
-        $request->session()->forget(["story_session", "token"]);
+        
+        if($characters_session){
+            $characterBox = Character::all();
+            foreach ($characters_session as $character_session){
+                $character = $characterBox->find($character_session);
+                $storyChara = new StoryCharacter;
+                $storyChara->story_id = $story->id;
+                $storyChara->character_id = $character->id;
+                $storyChara->save();
+            }
+        }
+        
+        $request->session()->forget(["story_session", "characters_session", "token"]);
         return redirect()->route('stories.story', [
             "story" => $story->id,
         ])->with('message', '作成完了しました');
@@ -69,9 +108,11 @@ class StoryController extends Controller
     public function editForm(Story $story){
         $user = Auth::user();
         $story = $user->stories()->findOrFail($story->id);
+        $characters = Character::all();
         
         return view('stories.edit', [
             "story" => $story,
+            "characters" => $characters,
         ]);
     }
     

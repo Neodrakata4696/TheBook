@@ -26,6 +26,14 @@
                         <textarea type="text" name="contents" class="retextarea w-full h-full" value="{{ old('contents') }}"></textarea>
                     </td>
                 </tr>
+                <tr>
+                    <th>登場キャラクター</th>
+                    <td>
+                        @foreach($characters as $character)
+                        <input type="checkbox" name="characters[{{ $character->name }}]" value="{{ $character->id }}">{{ $character->name }}
+                        @endforeach
+                    </td>
+                </tr>
             </table>
             @csrf
             <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">作成</button>
