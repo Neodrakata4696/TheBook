@@ -16,6 +16,14 @@
                     <th class="w-1/12 bg-yellow-300">本文</th>
                     <td class="border-l border-black">{{ $story['contents'] }}</td>
                 </tr>
+                <tr class="border-t border-black">
+                    <th class="w-1/12 bg-yellow-300">登場キャラクター</th>
+                    <td class="border-l border-black">
+                        @foreach ($characters as $character)
+                        {{ $character }}
+                        @endforeach
+                    </td>
+                </tr>
             </table>
             @csrf
             <button type="submit" class="bg-white px-3 py-2 shadow-sm sm:rounded-lg">更新</button>

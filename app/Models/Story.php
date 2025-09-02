@@ -17,4 +17,8 @@ class Story extends Model
     public function character(): BelongsTo{
         return $this->belongsTo(Character::class);
     }
+    
+    public function isAppendCharacter($chara): bool{
+        return StoryCharacter::where('story_id', $this->id)->where('character_id', $chara->id)->first() !== null;
+    }
 }

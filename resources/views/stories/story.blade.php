@@ -28,9 +28,10 @@
                 <h3>{{$story->title}}</h3>
                 <a href="{{ route('users.index', ['user' => $story->user->id]) }}" class="text-sky-800">{{ $story->user->name }}</a>
             </div>
-            <div class="flex border-b border-black">
+            <div class="flex">
+                <p>キャラクター:</p>
                 @foreach($characters as $character)
-                <a href="{{route('charas.detail', ['chara' => $character->character->id])}}" class="text-sky-800 mr-1">{{ $character->character->name }}</a>
+                <a href="{{route('charas.detail', ['chara' => $character->character->id])}}" class="text-white bg-sky-500 mt-1 mb-1 mr-1 p-1 rounded-xl">{{ $character->character->name }}</a>
                 @endforeach
             </div>
             {{ $story->contents }}

@@ -109,6 +109,7 @@ class StoryController extends Controller
         $user = Auth::user();
         $story = $user->stories()->findOrFail($story->id);
         $characters = Character::all();
+        $storyCharas = StoryCharacter::where('story_id', $story->id);
         
         return view('stories.edit', [
             "story" => $story,
@@ -120,10 +121,18 @@ class StoryController extends Controller
         $user = Auth::user();
         $story = $user->stories()->findOrFail($story->id);
         
-        $request->session()->forget(["story_session"]);
+        $request->session()->forget(["story_session", "characters_session"]);
         $story_session = $request->only($this->story_input);
         
         $request->session()->put("story_session", $story_session);
+        
+        $characters = [];
+        if ($request->input('characters') !== null){
+            foreach ($request->input('characters') as $character){
+                $characters[] = $character;
+            }
+            $request->session()->put('characters_session', $characters);
+        }
         
         $request->session()->put("token", csrf_token());
         $request->session()->put("story_id_session", $story->id);
@@ -153,9 +162,22 @@ class StoryController extends Controller
             ]);
         }
         
+        $characters_session = $request->session()->get("characters_session");
+        $characters = [];
+        if ($characters_session){
+            $characterBox = Character::all();
+            foreach($characters_session as $character_session){
+                if ($character_session !== null){
+                    $character = $characterBox->find($character_session);
+                    $characters[] = $character->name;
+                }
+            }
+        }
+        
         return view('stories.editConfirm', [
             "story_id" => $story,
             "story" => $story_session,
+            "characters" => $characters,
         ]);
     }
     
@@ -164,11 +186,29 @@ class StoryController extends Controller
         $story = $user->stories()->findOrFail($story->id);
         
         $story_session = $request->session()->get("story_session");
+        $characters_session = $request->session()->get("characters_session");
         
         $story->title = $story_session['title'];
         $story->contents = $story_session['contents'];
         $story->save();
-        $request->session()->forget(["story_session", "token", "story_id_session"]);
+        
+        if($characters_session){
+            $characterBox = Character::all();
+            foreach ($characters_session as $character_session){
+                if($character_session !== null){
+                    $character = $characterBox->find($character_session);
+                    if(!$story->isAppendCharacter($character)){
+                        $storyChara = new StoryCharacter;
+                        $storyChara->story_id = $story->id;
+                        $storyChara->character_id = $character->id;
+                        $storyChara->save();
+                    }
+                }
+            }
+        }
+        $storyCharacterBox = StoryCharacter::where('story_id', $story->id)->whereNotIn('character_id', $characters_session)->delete();
+        
+        $request->session()->forget(["story_session", "characters_session", "token", "story_id_session"]);
         return redirect()->route('stories.story', [
             "story" => $story,
         ])->with('message', '更新完了しました');
