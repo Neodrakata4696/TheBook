@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Character extends Model
+class Story extends Model
 {
     use HasFactory;
     
@@ -14,15 +14,11 @@ class Character extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function story(): BelongsTo{
-        return $this->belongsTo(Story::class);
+    public function character(): BelongsTo{
+        return $this->belongsTo(Character::class);
     }
     
-    public function image(): BelongsTo{
-        return $this->belongsTo(Image::class);
-    }
-    
-    public function bookmarks() {
-        return $this->hasMany('App\Models\Bookmark');
+    public function isAppendCharacter($chara): bool{
+        return StoryCharacter::where('story_id', $this->id)->where('character_id', $chara->id)->first() !== null;
     }
 }

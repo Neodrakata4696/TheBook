@@ -19,7 +19,7 @@ class CharactersTableSeeder extends Seeder
         
         DB::table('characters')->insert([
             'name' => 'マナ',
-            'explain' => '魔法使いの女の子',
+            'explain' => '魔法使いの女の子。',
             'user_id' => $user->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
