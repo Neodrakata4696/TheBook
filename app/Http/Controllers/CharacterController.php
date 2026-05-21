@@ -27,11 +27,19 @@ class CharacterController extends Controller
     public function index(Request $request){
         $list = Character::query();
         
+        $searchMode = $request->input('searchMode');
         $keyword = $this->search->escape($request->input('keyword'));
         $keywords = $this->search->pregSplit($keyword);
-        $results = $this->search->searchQuery($list, $keywords);
+        
+        if($searchMode == 'OR'){
+            $results = $this->search->searchOrQuery($list, $keywords);
+        }
+        else{
+            $results = $this->search->searchAndQuery($list, $keywords);
+        }
         
         return view('characters.index', [
+            'searchMode' => $searchMode,
             'characters' => $results,
             'keywords' => $keywords,
             'keyword' => $keyword,

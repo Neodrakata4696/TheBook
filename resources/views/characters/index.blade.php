@@ -14,12 +14,18 @@
     </x-slot>
     
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        @if($characters->count() !== 0)
         <form method="get" action="{{ route('charas.index') }}" class="flex mt-4 my-4">
             @csrf
-            <input type="text" name="keyword" class="w-11/12" value="{{ old('keyword', $keyword) }}">
-            <button type="submit" class="bg-blue-500 text-white px-3 py-2 mx-auto shadow-sm sm:rounded-lg">検索</button>
+            <input type="text" name="keyword" class="w-10/12" value="{{ old('keyword', $keyword) }}">
+            <div class="mx-auto text-center">
+                <button type="submit" class="bg-blue-500 text-white px-3 py-2 shadow-sm sm:rounded-lg">検索</button>
+                <div>
+                    <input type="radio" name="searchMode" value="AND" {{ empty(old('searchMode')) || $searchMode == 'AND' ? 'checked' : '' }}>AND
+                    <input type="radio" name="searchMode" value="OR" {{ $searchMode == 'OR' ? 'checked' : '' }}>OR
+                </div>
+            </div>
         </form>
+        @if($characters->count() !== 0)
         <table class="list bg-white w-full my-3">
             <tr class="border-b-2 border-black bg-yellow-300">
                 <th class="w-2/12">キャラクター名</th>

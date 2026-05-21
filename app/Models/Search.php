@@ -21,10 +21,20 @@ class Search extends Model
      * @var string[]|false $keywords
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function searchQuery($query, $keywords = null){
+    public function searchAndQuery($query, $keywords = null){
         if(!empty($keywords)) {
             foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%")->orWhere('explain', 'LIKE', "%{$keyword}%");
+                });
+            }
+        }
+        return $query->latest()->paginate(15);
+    }
+    public function searchOrQuery($query, $keywords = null){
+        if(!empty($keywords)) {
+            foreach ($keywords as $keyword) {
+                $query->orWhere(function ($query) use ($keyword) {
                     $query->where('name', 'LIKE', "%{$keyword}%")->orWhere('explain', 'LIKE', "%{$keyword}%");
                 });
             }
